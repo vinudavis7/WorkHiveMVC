@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Models.Jobs>
+
+@foreach (var item in Model)
+{
+  
+
+<div class="job-card col-md-5">
+        <h3 id="job-name">
+            @Html.DisplayFor(modelItem => item.Title)
+        </h3>
+        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        <br />
+    <span class="job-days">4 days ago by</span>
+        <span class="job-recruiter">
+            @Html.DisplayFor(modelItem => item.Client.Name)
+        </span><br />
+        <i class="fa-solid fa-sterling-sign"></i>  @Html.DisplayFor(modelItem => item.Budget)
+        <br />
+        <i class="fa-solid fa-location-dot"></i>         @Html.DisplayFor(modelItem => item.Location)
+        <br />
+    @Html.ActionLink("View Details","JobDetails")
+</div>
+
+}

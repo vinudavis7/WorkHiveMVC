@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Models.Jobs>
+@{
+    ViewData["Title"] = "JobSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/jobs.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-4">
+        <span>Role</span><input type="text" id="searchRole" name="searchRole" class="form-control" placeholder="Role eg. PHP developer" />
+
+
+    </div>
+        <div class="col-md-4">
+            <span>Location</span><input type="text" id="searchLocation" name="searchLocation" class="form-control" placeholder=" Location eg. Sheffield" />
+
+        </div>
+        
+</div>
+
+    <div class="job-list row">
+    <div class="row">
+            @Html.Partial("_PartialViewJobCard.cshtml",Model)
+                
+      </div>
+    </div>
+
+
