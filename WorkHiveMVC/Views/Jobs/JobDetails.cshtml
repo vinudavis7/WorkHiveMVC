@@ -1,0 +1,136 @@
+﻿@model Models.Job
+<link href="~/css/jobdetails.css" rel="stylesheet" />
+
+
+    @Html.HiddenFor(model => model.JobId)
+
+@Html.ActionLink("Back to Search", "JobSearch") 
+
+
+<div class="container">
+<div class="row">
+    <div class="col-md-7">
+        <div class="box">
+            <div class="detail-wrapper-body">
+                <div class="row">
+                <div class="listing-title-bar col-md-10">
+                    <h2>   @Html.DisplayFor(model => model.Title) 
+                        <span class="mrg-l-5 category-tag">
+                        Full Time
+                        </span></h2>
+                        <span class="badge bg-secondary text-white">
+                            @Html.DisplayFor(model => model.Category.CategoryName)
+                        </span>
+
+                </div>
+                <div class="widget_author__avatar col-md-2">
+                        <img src="images/featurejobs/1.png" width="100%" height="100%" alt="">
+                </div>
+                </div>
+                <div class="san mt-33">
+                    <a href="#listing-location" class="listing-address">
+                        <i class="fa fa-map-marker pr-2 ti-location-pin mrg-r-5"></i>
+                        @Html.DisplayFor(model => model.Location)
+                    </a>
+                    <div class="rating-box mt-1">
+                        <div class="detail-list-rating">
+                            <a href="#" class="detail-rating-count mr-2"><i class="fas fa-building pr-2 mb-1"></i>
+                                @Html.DisplayFor(model => model.Client.Name):
+                                </a>
+                            <a href="#" class="detail-rating-count mr-1">4.5</a>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half mr-2"></i>
+                        </div>
+                        <span class="fr-position"><img src="images/freelancers/us.png" alt="" class="ml-2 mb-1 mr-2">United States</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <h3>Job Description</h3>
+            <p class="mb-3">
+                @Html.DisplayFor(model => model.Description)
+            </p>
+
+        </div>  
+    </div>
+    <div class="col-md-5">
+<div class="side-list box">
+    <div class="widget-boxed-header">
+        <h3><i class="fas fa-business-time pr-3"></i>Job Summary</h3>
+    </div>
+    <div class="widget-boxed-body pt-0">
+        <ul>
+            <li class="pt-0">
+                <i class="fas fa-dollar-sign pr-3"></i>Offerd Salary <span>
+                    $@Html.DisplayFor(model => model.Budget)
+                </span>
+            </li>
+            <li class="pt-0">
+                <i class="fas fa-briefcase pr-3"></i>Experience <span>
+                    2 Years
+                </span>
+            </li>
+            <li class="pt-0">
+                <i class="fas fa-clock pr-3"></i>Date Posted <span>
+                    @Html.DisplayFor(model => model.DatePosted)
+                </span>
+            </li>
+            <li class="pt-0">
+                <i class="fas fa-clock pr-3"></i>Deadline <span>
+                    @Html.DisplayFor(model => model.Deadline)
+                </span>
+            </li>
+            <li class="pt-0">
+                <i class="fas fa-clock pr-3"></i>Skills <span>
+                    @Html.DisplayFor(model => model.SkillTags)
+                </span>
+            </li>
+
+        </ul>
+    </div>
+</div>
+        <input type="button" class="btn btn-success" value="Submit Proposal" data-toggle="modal" data-target="#myModalproposal" data-dismiss="modal" />
+</div>
+   </div>
+   </div>
+<!-- Modal -->
+<div class="modal " id="myModalproposal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                Bid Amount
+                <input type="text" id="bidAmount" class="form-control" placeholder="Bid Amount" />
+                This project will be delivered in
+                <input type="text" id="days" class="form-control" placeholder="Days" />
+                Description
+                <textarea class="form-control" id="description" >
+                    </textarea>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="saveProposal()">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+
+    </script>
+<script src="~/js/jobs.js"></script>
+
+
+
+
+

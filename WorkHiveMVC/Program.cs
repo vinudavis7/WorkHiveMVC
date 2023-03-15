@@ -5,10 +5,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddHttpContextAccessor();
+
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(1);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 //Add services
 builder.Services.AddScoped<IUserservice, UserService>();
-var app = builder.Build();
+builder.Services.AddScoped<IJobService, JobService>();
 
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -23,9 +34,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Jobs}/{action=Index}/{id?}");
+    pattern: "{controller=Admin}/{action=Dashboard}/{id?}");
 
 app.Run();

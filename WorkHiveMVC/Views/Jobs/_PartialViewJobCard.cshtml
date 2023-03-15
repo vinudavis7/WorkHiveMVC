@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Models.Job>
+
+@foreach (var item in Model)
+{
+
+
+    <div class="job-card col-md-5">
+        <div class="row">
+        <div class="col-md-6">
+        <h3 id="job-name" class="text-info font-weight-bold">
+            @Html.DisplayFor(modelItem => item.Title)
+        </h3>
+        <span class="badge bg-secondary text-white">
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </span>
+        <br />
+        <i class="fa-regular fa-calendar-days"></i>
+        <span class="job-days">4 days ago by</span>
+        <span class="job-recruiter">
+            @Html.DisplayFor(modelItem => item.Client.Name)
+        </span><br />
+        <i class="fa-solid fa-sterling-sign"></i>  @Html.DisplayFor(modelItem => item.Budget)
+        <br />
+        <i class="fa-solid fa-location-dot"></i>         @Html.DisplayFor(modelItem => item.Location)
+        <br />
+                <br />
+        @Html.ActionLink("View Details","JobDetails",new { jobId = item.JobId }, null)
+    </div>
+        <div class="col-md-6">
+            <div class="job-result-logo">
+                <a class="gtmJobListingLogo job-result-logo__href" href="/jobs/advanced-computer-software/p30296" title="Advanced jobs" data-company="Advanced">
+                    <img src="https://resources.reed.co.uk/profileimages/logos/thumbs/Logo_30296.png?v=20230302220928" alt="Advanced jobs" class="job-result-logo__img b-loaded" width="120" height="50" style="display: block;">
+                </a>
+            </div>
+            </div>
+    </div>
+    </div>
+
+}

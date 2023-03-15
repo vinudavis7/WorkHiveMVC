@@ -16,3 +16,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+.nav-items {
+    float: right;
+    text-align: end;
+}

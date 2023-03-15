@@ -10,5 +10,7 @@ namespace WorkHiveServices.Interface
     public  interface IUserservice
     {
         public Task<List<User>> GetUsers();
+        public Task<bool> Register(User user);
+        public  Task<User> GetUserDetails(string username, string password);
     }
 }

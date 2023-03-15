@@ -12,14 +12,14 @@ using WorkHiveServices.Interface;
 
 namespace WorkHiveServices
 {
-    public class UserService:IUserservice
+    public class JobService:IJobService
     {
-        public async Task<List<User>> GetUsers()
+        public async Task<List<Job>> GetJobs()
         {
-            List<User> usersList=new List<User>();
+            List<Job> usersList=new List<Job>();
             try
             {
-                usersList = await ApiHelper.GetAsync<List<User>>("api/Users");
+                usersList = await ApiHelper.GetAsync<List<Job>>("api/Jobs");
             }
             catch (Exception ex)
             {
@@ -27,32 +27,32 @@ namespace WorkHiveServices
             }
             return usersList;
         }
-
-        public async Task<bool> Register(User user)
+        public async Task<Job> GetJobDetails(int jobId)
         {
+            Job jobDetails = new Job();
             try
             {
-                var res = await ApiHelper.PostAsync<bool>("api/Users", user);
-                return res;
+                jobDetails = await ApiHelper.GetAsync<Job>("api/Jobs/"+jobId);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+            return jobDetails;
         }
-        public async Task<User> GetUserDetails(string username,string password)
+
+        public async Task<bool> SaveProposal(Proposal proposal)
         {
+            Job jobDetails = new Job();
             try
             {
-                var res = await ApiHelper.GetAsync<User>("api/Users/GetUserDetails?username="+ username+ "&password="+password);
-
-                return res;
+                var result = await ApiHelper.PostAsync<Job>("api/Proposals", proposal);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            
+            return true;
         }
     }
 }

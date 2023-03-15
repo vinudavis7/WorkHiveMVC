@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 
 namespace Helper
 {
@@ -10,7 +11,7 @@ namespace Helper
     {
 
         #region Generic Type Response
-    
+
         public static async Task<T> GetAsync<T>(string endpoint)
         {
             T data;
@@ -71,54 +72,88 @@ namespace Helper
         //    Object o = new Object();
         //    return (T)o;
         //}
-        //public async Task<T> PostAsync<T>(string url, object param)
-        //{
-        //    try
-        //    {
-        //        T data;
-        //        var httpClient = _httpClientFactory.CreateClient();
-        //        var json = JsonConvert.SerializeObject(httpClient);
-        //        HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
+        public static async Task<bool> PostAsync<T>(string url, object param)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri("https://localhost:7223/");
+                string jsonData = JsonConvert.SerializeObject(param);
+                StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                using (HttpResponseMessage response = await client.PostAsync(url, content))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                        return false;
+                }
 
-        //        using (HttpResponseMessage response = await httpClient.PostAsync(url, contentPost))
-        //        using (HttpContent content = response.Content)
-        //        {
-        //            string d = await content.ReadAsStringAsync();
-        //            if (d != null)
-        //            {
-        //                data = JsonConvert.DeserializeObject<T>(d);
-        //                return (T)data;
-        //            }
-        //        }
-        //        Object o = new Object();
-        //        return (T)o;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Object o = new Object();
-        //        return (T)o;
-        //    }
 
-        //}
-        //public async Task<T> PutAsync<T>(string url, object param)
-        //{
-        //    T data;
-        //    var httpClient = _httpClientFactory.CreateClient();
-        //    HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
 
-        //    using (HttpResponseMessage response = await httpClient.PutAsync(url, contentPost))
-        //    using (HttpContent content = response.Content)
-        //    {
-        //        string d = await content.ReadAsStringAsync();
-        //        if (d != null)
-        //        {
-        //            data = JsonConvert.DeserializeObject<T>(d);
-        //            return (T)data;
-        //        }
-        //    }
-        //    Object o = new Object();
-        //    return (T)o;
-        //}
+               // T data;
+               // var httpClient = new HttpClient();
+               // var client = new HttpClient();
+               // client.BaseAddress = new Uri("https://localhost:7223/");
+               // client.DefaultRequestHeaders.Accept.Clear();
+               // client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+               // var json = JsonConvert.SerializeObject(httpClient);
+               // HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
+
+               //  StringContent content = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
+               // //var bodyJson = JsonSerializer.Serialize(param);
+               //// var stringContent = new StringContent(bodyJson, Encoding.UTF8, "application/json");
+
+
+               // // var result = postTask.Result;
+               // var response = await client.PostAsJsonAsync(url, param);
+               // // using (HttpResponseMessage response = await client.PostAsync(url, content))
+               // //using (HttpContent content = response.Content)
+               // //{
+               // //    string d = await content.ReadAsStringAsync();
+               // //    if (d != null)
+               // //    {
+               // //        data = JsonConvert.DeserializeObject<T>(d);
+               // //        return (T)data;
+               // //    }
+               // //}
+               // // Object o = new Object();
+               // //return (T)o;
+              
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        public static async Task<T> PutAsync<T>(string url, object param)
+        {
+            T data;
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7223/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
+
+            using (HttpResponseMessage response = await client.PutAsync(url, contentPost))
+            using (HttpContent content = response.Content)
+            {
+                string d = await content.ReadAsStringAsync();
+                if (d != null)
+                {
+                    data = JsonConvert.DeserializeObject<T>(d);
+                    return (T)data;
+                }
+            }
+            Object o = new Object();
+            return (T)o;
+        }
 
         //public async Task<T> DeleteAsync<T>(string url)
         //{
@@ -139,8 +174,25 @@ namespace Helper
         //    return (T)o;
         //}
 
+        //public static async Task<T> PutAsync<T>(string endpoint)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri("http://localhost:64189/api/student");
 
-        #endregion
+        //        //HTTP POST
+        //        var putTask = client.PutAsJsonAsync<T>(d);
+        //        putTask.Wait();
 
+        //        var result = putTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+
+        //            return RedirectToAction("Index");
+        //        }
+        //    }
+
+            #endregion
+        //}
     }
 }
