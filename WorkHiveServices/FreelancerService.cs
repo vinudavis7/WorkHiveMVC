@@ -1,0 +1,74 @@
+﻿using Helper;
+using Models;
+using Models.ViewModel;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Text;
+using System.Threading.Tasks;
+using WorkHiveServices.Interface;
+
+namespace WorkHiveServices
+{
+    public class FreelancerService : IFreelancerService
+    {
+        public async Task<User> GetFreelancerDetails(string userId)
+        {
+            User details = new User();
+            try
+            {
+                details = await ApiHelper.GetAsync<User>("api/Users/GetDetails/" + userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return details;
+        }
+        public async Task<bool> UpdateProfile(User user)
+        {
+            bool result = false;
+            try
+            {
+                ProfileViewModel profile = new ProfileViewModel();
+                profile.UserId = user.Id;
+                profile.ProfileId = user.Profile.ProfileId;
+
+                profile.Name = user.UserName;
+                profile.Email = user.Email;
+                profile.Phone = user.PhoneNumber;
+                profile.Location = user.Location;
+                profile.ProfileImage = user.ProfileImage;
+                profile.Skills = user.Profile.Skills;
+                profile.Experience = (int)user.Profile.Experience;
+                profile.Designation = user.Profile.Designation;
+                profile.Description = user.Profile.Description;
+                profile.HourlyRate = (double)user.Profile.HourlyRate;
+                var vresult = await ApiHelper.PutAsync<bool>("api/Users/UpdateProfile", profile);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+        public async Task<List<Bid>> GetBids(string userId)
+        {
+            List<Bid> result = new List<Bid>();
+            try
+            {
+                var userDetails = await ApiHelper.GetAsync<User>("api/Users/GetDetails/" + userId);
+                result = (List<Bid>)userDetails.Bids;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+    }
+}

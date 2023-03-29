@@ -81,3 +81,34 @@ function register() {
         }
     });
 }
+
+function searchJob() {
+
+    var searchTitle = $("#searchTitle").val();
+    var searchLocation = $("#searchLocation").val();
+
+    window.location.href = "/Jobs/JobSearch?searchLocation=" + searchLocation + "&searchTitle=" + searchTitle;
+
+}
+
+function ConfirmAcceptProposal(proposalId) {
+    const response = confirm("Please confirm..All other Bids will be rejected..!!!");
+
+    if (response) {
+        $.ajax({
+            type: "POST",
+            url: "/Client/UpdateBidStatus?bidId=" + proposalId,
+            success: function (data) {
+                if (data == true) {
+                    alert("Bid Accepted Successfully")
+                    location.reload();
+                }
+                else
+                    alert("Operation failed")
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+    } 
+}

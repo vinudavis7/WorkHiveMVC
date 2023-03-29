@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Models;
+using Models.ViewModel;
 using System.Data;
 using WorkHiveServices;
 using WorkHiveServices.Interface;
@@ -14,16 +16,27 @@ namespace WorkHiveMVC.Controllers
         {
             _jobService = jobService;
         }
-        public IActionResult Index()
+       
+        public async Task<IActionResult> JobSearch(string? searchLocation, string? searchTitle)
         {
-            var c = HttpContext.Session.GetString("loggedInUserId");
-            return View("LandingPage");
+           //var jobsList= await _jobService.GetJobs(searchLocation, searchTitle,"","");
+            ViewBag.SearchTitle = searchTitle;
+            ViewBag.SearchLocation = searchLocation;
+            ViewBag.JobType = "";
+            return View();
         }
-        public async Task<IActionResult> JobSearch()
+        [HttpPost]
+        public async Task<IActionResult> Search([FromBody] VMJobSearchParams searchParams)
         {
-           var jobsList= await _jobService.GetJobs();
-            return View(jobsList);
+            string jobType = "";
+            var jobsList = await _jobService.GetJobs(searchParams);
+            ViewBag.SearchTitle = searchParams.SearchTitle;
+            ViewBag.SearchLocation = searchParams.SearchLocation;
+            ViewBag.JobType = jobType;
+            return PartialView("_PartialViewJobCard", jobsList);
         }
+
+
         public async Task<IActionResult> JobDetails(int jobId)
         {
             var jobDetails = await _jobService.GetJobDetails(jobId);
@@ -36,14 +49,14 @@ namespace WorkHiveMVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<bool> SaveProposal([FromBody]  Proposal proposal)
+        public async Task<bool> SaveBid([FromBody] BidRequest bid)
         {
             try
             {
 
-                int userId =Convert.ToInt32( HttpContext.Session.GetString("loggedInUserId"));
-                proposal.FreelancerId = userId;
-                var result = await _jobService.SaveProposal(proposal);
+                string userId =HttpContext.Session.GetString("loggedInUserId");
+                bid.UserId = userId;
+                var result = await _jobService.SaveBid(bid);
                 return result;
             }
             catch (Exception ex)

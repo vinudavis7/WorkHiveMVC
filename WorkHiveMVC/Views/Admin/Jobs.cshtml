@@ -1,0 +1,89 @@
+﻿@*@model IPagedList<Models.Job>
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@{
+    ViewData["Title"] = "Jobs";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h3>Jobs</h3>
+
+<div class="container">
+    <div class="pagination-container">
+        @Html.PagedListPager(Model, page => Url.Action("Users", new { page }))
+    </div>
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                CategoryId
+            </th>
+            <th>
+                Client
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+              Description
+            </th>
+            <th>
+               Budget
+            </th>
+            <th>
+               SkillTags
+            </th>
+            <th>
+               JobType
+            </th>
+            <th>
+                Deadline
+            </th>
+            <th>
+                DatePosted
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+      
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SkillTags)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatePosted)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>*@

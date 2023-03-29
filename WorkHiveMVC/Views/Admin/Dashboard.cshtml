@@ -1,6 +1,12 @@
 ﻿@{
     ViewData["Title"] = "CreateJob";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var job = ViewBag.data["Jobs"];
+    var Proposals = ViewBag.data["Proposals"];
+    var Freelancers = ViewBag.data["Freelancers"];
+    var Clients = ViewBag.data["Clients"];
+
 }
 
 <section class="content">
@@ -11,9 +17,9 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>@job</h3>
 
-                        <p>New Orders</p>
+                        <p>Jobs</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
@@ -26,9 +32,9 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <h3>@Proposals
 
-                        <p>Bounce Rate</p>
+                        <p>Proposals</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -41,9 +47,9 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3>@Freelancers</h3>
 
-                        <p>User Registrations</p>
+                        <p>Freelancers</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
@@ -56,9 +62,9 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3>@Clients</h3>
 
-                        <p>Unique Visitors</p>
+                        <p>Clients</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>

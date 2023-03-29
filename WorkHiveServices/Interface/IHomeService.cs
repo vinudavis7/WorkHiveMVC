@@ -8,10 +8,10 @@ using Models.ViewModel;
 
 namespace WorkHiveServices.Interface
 {
-    public  interface IJobService
+    public  interface IHomeService
     {
-        public Task<List<Job>> GetJobs(VMJobSearchParams searchParams);
-        public Task<Job> GetJobDetails(int jobId);
-        public  Task<bool> SaveBid(BidRequest bid);
+        public Task<VMDashboard> GetDashboardData();
+        public  Task<IDictionary<string, int>> GetDashboardSummary();
+
     }
 }

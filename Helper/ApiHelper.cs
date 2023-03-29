@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Models;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -14,15 +15,56 @@ namespace Helper
 
         public static async Task<T> GetAsync<T>(string endpoint)
         {
+            try
+            {
+
+
+                T data;
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://localhost:7223/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    // HTTP GET
+                    HttpResponseMessage response = await client.GetAsync(endpoint);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string d = await response.Content.ReadAsStringAsync();
+                        if (d != null)
+                        {
+                            data = JsonConvert.DeserializeObject<T>(d);
+                            return (T)data;
+                        }
+
+                    }
+                }
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+
+        Object o = new Object();
+            return (T)o;
+        }
+        public static async Task<T> SendAsync<T>(string endpoint,object param)
+        {
             T data;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:7223/");
                 client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+               // client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // HTTP GET
-                HttpResponseMessage response = await client.GetAsync(endpoint);
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri(client.BaseAddress+endpoint),
+                    Content = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json"),
+
+                };
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
                     string d = await response.Content.ReadAsStringAsync();
@@ -72,10 +114,25 @@ namespace Helper
         //    Object o = new Object();
         //    return (T)o;
         //}
-        public static async Task<bool> PostAsync<T>(string url, object param)
+
+
+
+        public static async Task<bool> PostRequestAsync<T>(string endpoint,T value)
+        {
+
+            using (var client = new System.Net.Http.HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7223/api/");
+                var cc=await client.PostAsJsonAsync("Freelancer", value);
+                //var res= await client.PostAsJsonAsync<T>(endpoint, value);
+                return true;
+            }
+        }
+        public static async Task<T> PostAsync<T>(string url, object param)
         {
             try
             {
+                T data;
                 var client = new HttpClient();
                 client.BaseAddress = new Uri("https://localhost:7223/");
                 string jsonData = JsonConvert.SerializeObject(param);
@@ -84,46 +141,52 @@ namespace Helper
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        return true;
+                        string d = await response.Content.ReadAsStringAsync();
+                        if (d != null)
+                        {
+                            data = JsonConvert.DeserializeObject<T>(d);
+                            return (T)data;
+                        }
+
                     }
-                    else
-                        return false;
                 }
 
 
 
-               // T data;
-               // var httpClient = new HttpClient();
-               // var client = new HttpClient();
-               // client.BaseAddress = new Uri("https://localhost:7223/");
-               // client.DefaultRequestHeaders.Accept.Clear();
-               // client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                // T data;
+                // var httpClient = new HttpClient();
+                // var client = new HttpClient();
+                // client.BaseAddress = new Uri("https://localhost:7223/");
+                // client.DefaultRequestHeaders.Accept.Clear();
+                // client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-               // var json = JsonConvert.SerializeObject(httpClient);
-               // HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
+                // var json = JsonConvert.SerializeObject(httpClient);
+                // HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
 
-               //  StringContent content = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
-               // //var bodyJson = JsonSerializer.Serialize(param);
-               //// var stringContent = new StringContent(bodyJson, Encoding.UTF8, "application/json");
+                //  StringContent content = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
+                // //var bodyJson = JsonSerializer.Serialize(param);
+                //// var stringContent = new StringContent(bodyJson, Encoding.UTF8, "application/json");
 
 
-               // // var result = postTask.Result;
-               // var response = await client.PostAsJsonAsync(url, param);
-               // // using (HttpResponseMessage response = await client.PostAsync(url, content))
-               // //using (HttpContent content = response.Content)
-               // //{
-               // //    string d = await content.ReadAsStringAsync();
-               // //    if (d != null)
-               // //    {
-               // //        data = JsonConvert.DeserializeObject<T>(d);
-               // //        return (T)data;
-               // //    }
-               // //}
-               // // Object o = new Object();
-               // //return (T)o;
-              
+                // // var result = postTask.Result;
+                // var response = await client.PostAsJsonAsync(url, param);
+                // // using (HttpResponseMessage response = await client.PostAsync(url, content))
+                // //using (HttpContent content = response.Content)
+                // //{
+                // //    string d = await content.ReadAsStringAsync();
+                // //    if (d != null)
+                // //    {
+                // //        data = JsonConvert.DeserializeObject<T>(d);
+                // //        return (T)data;
+                // //    }
+                // //}
+                // // Object o = new Object();
+                // //return (T)o;
 
-                return false;
+
+                //return false;
+                Object o = new Object();
+                return (T)o;
             }
             catch (Exception ex)
             {

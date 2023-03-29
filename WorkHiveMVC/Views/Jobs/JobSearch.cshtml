@@ -1,28 +1,43 @@
-﻿@model IEnumerable<Models.Job>
-@{
+﻿@{
     ViewData["Title"] = "JobSearch";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/css/jobs.css" rel="stylesheet" />
+
 <div class="container">
 <div class="row">
     <div class="col-md-4">
-        <span>Role</span><input type="text" id="searchRole" name="searchRole" class="form-control" placeholder="Role eg. PHP developer" />
+
+            <span>Job Title</span><input type="text" id="searchTitle" value="@ViewBag.SearchTitle" name="searchRole" class="form-control" placeholder="Role eg. PHP developer" />
 
 
     </div>
         <div class="col-md-4">
-            <span>Location</span><input type="text" id="searchLocation" name="searchLocation" class="form-control" placeholder=" Location eg. Sheffield" />
+            <span>Location</span><input type="text" id="searchLocation" value="@ViewBag.SearchLocation" name="searchLocation" class="form-control" placeholder=" Location eg. Sheffield" />
 
         </div>
+        <div class="col-md-4">
+            <span>Job Type</span><input type="text" id="searchJobType" value="@ViewBag.JobType" name="searchLocation" class="form-control" placeholder=" Location eg. Sheffield" />
+
+        </div>
+        <button type="button" class="btn btn-primary" onclick="search()">Submit</button>
+
         
 </div>
 
     <div class="job-list row">
-    <div class="row">
-            @Html.Partial("_PartialViewJobCard.cshtml",Model)
+        <div class="row " id="search-result">
                 
       </div>
     </div>
     </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        search();
+    });
+</script>
+
+<script src="~/js/jobs.js"></script>
+
+
 

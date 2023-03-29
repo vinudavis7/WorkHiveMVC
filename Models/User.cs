@@ -1,24 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 
 namespace Models
 {
-    public class User
+    public class User: IdentityUser
     {
 
-        public int UserId { get; set; }
-        [Required, MaxLength(50)]
-        public string Name { get; set; }
-        [Required, MaxLength(50)]
-        public string Phone { get; set; }
-        [Required, MaxLength(50)]
-        public string Email { get; set; }
-        [Required, MaxLength(50)]
+        public string Id { get; set; }
+
         public string Location { get; set; }
-        [Required, MaxLength(50)]
-        public string UserType { get; set; }
         public string ProfileImage { get; set; }
-        [Required, MaxLength(50)]
-        public string Password { get; set; }
-        public DateTime DateCreated { get; set; }
+        public Profile? Profile { get; set; }
+
+
+        public virtual ICollection<Bid> Bids { get; set; }
+        public virtual ICollection<Review> FreelancerReviews { get; set; }
+        public virtual ICollection<Review> ClientReviews { get; set; }
+        public virtual ICollection<Job> Jobs { get; set; } =
+        new List<Job>();
     }
 }

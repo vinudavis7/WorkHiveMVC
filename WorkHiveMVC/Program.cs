@@ -16,8 +16,16 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 //Add services
-builder.Services.AddScoped<IUserservice, UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJobService, JobService>();
+//builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IHomeService, HomeService>();
+builder.Services.AddScoped<IFreelancerService, FreelancerService>();
+builder.Services.AddScoped<IClientService, ClientService>();
+
+
+
+
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -38,6 +46,6 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Dashboard}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

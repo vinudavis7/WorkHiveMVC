@@ -1,5 +1,6 @@
 ﻿using Helper;
 using Models;
+using Models.ViewModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,25 +15,28 @@ namespace WorkHiveServices
 {
     public class JobService:IJobService
     {
-        public async Task<List<Job>> GetJobs()
+        public async Task<List<Job>> GetJobs(VMJobSearchParams searchParams)
         {
-            List<Job> usersList=new List<Job>();
+            List<Job> jobList=new List<Job>();
             try
             {
-                usersList = await ApiHelper.GetAsync<List<Job>>("api/Jobs");
+                jobList = await ApiHelper.GetAsync<List<Job>>("api/Jobs?SearchLocation=" + searchParams.SearchLocation 
+                    + "&SearchTitle=" + searchParams.SearchTitle + "&SearchJobType=" + searchParams.SearchJobType + "");
+
+                //await ApiHelper.SendAsync<List<Job>>("api/Jobs", searchParams);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return usersList;
+            return jobList;
         }
         public async Task<Job> GetJobDetails(int jobId)
         {
             Job jobDetails = new Job();
             try
             {
-                jobDetails = await ApiHelper.GetAsync<Job>("api/Jobs/"+jobId);
+                jobDetails = await ApiHelper.GetAsync<Job>("api/Jobs/GetDetails/" + jobId);
             }
             catch (Exception ex)
             {
@@ -41,12 +45,11 @@ namespace WorkHiveServices
             return jobDetails;
         }
 
-        public async Task<bool> SaveProposal(Proposal proposal)
+        public async Task<bool> SaveBid(BidRequest bid)
         {
-            Job jobDetails = new Job();
             try
             {
-                var result = await ApiHelper.PostAsync<Job>("api/Proposals", proposal);
+                var result = await ApiHelper.PostAsync<bool>("api/Bids", bid);
             }
             catch (Exception ex)
             {

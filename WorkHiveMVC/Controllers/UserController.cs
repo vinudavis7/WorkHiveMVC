@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using Models.ViewModel;
 using WorkHiveServices.Interface;
 
 namespace WorkHiveMVC.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserservice _userservice;
-        public UserController(IUserservice userService)
+        private readonly IUserService _userservice;
+        public UserController(IUserService userService)
         {
             _userservice = userService;
         }
@@ -28,14 +29,20 @@ namespace WorkHiveMVC.Controllers
         }
         public async Task<string> Login(string username, string password)
         {
-            var user = await _userservice.GetUserDetails(username, password);
+            username = "vinudavis8@gmail.com";
+            username = "cc@gmail.com";
+            //username = "admin@gmail.com";
+
+            password = "1234";
+            password = "@Lucifer666";
+            var user = await _userservice.Login(username, password);
             if (user != null)
             {
-                HttpContext.Session.SetString("loggedInUserId", user.UserId.ToString());
-                HttpContext.Session.SetString("loggedInUserType", user.UserType);
+                HttpContext.Session.SetString("loggedInUserId", user.UserId);
+                HttpContext.Session.SetString("loggedInUserType", user.Role);
                 HttpContext.Session.SetString("loggedInUserName", user.Name);
 
-                return user.UserType;
+                return user.Role;
                 
             }else
                 return "Failed";
@@ -47,23 +54,16 @@ namespace WorkHiveMVC.Controllers
                 HttpContext.Session.SetString("loggedInUserId", String.Empty);
                 HttpContext.Session.SetString("loggedInUserType", String.Empty);
                 HttpContext.Session.SetString("loggedInUserName", String.Empty);
-            return RedirectToAction("Index", "Jobs");
+            return RedirectToAction("Index", "Home");
 
         }
         [HttpPost]
-        public async Task<bool> Register([FromBody]  User user)
+        public async Task<bool> Register([FromBody] RegisterRequest user)
         {
-            //user.ProfileImage = "asd";
-            //user.Email = "asf";
-           // user.UserType = "admin";
-            var result = await _userservice.Register(user);
-            if (result)
-            {
-               return true;
 
-            }
-            else
-                return false;
+            var result = await _userservice.Register(user);
+
+            return true;
         }
     }
 }

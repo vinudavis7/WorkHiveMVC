@@ -11,14 +11,9 @@ namespace Models
     public class Payment
     {
         public int PaymentId { get; set; }
-
-        public int ContractId { get; set; }
-
         public int Amount { get; set; }
-
         public string PaymentMethod { get; set; }
-
         public DateTime PaymentDate { get; set; }
-        public Contract Contract { get; set; }
+        public virtual Contract Contract { get; set; }
     }
 }

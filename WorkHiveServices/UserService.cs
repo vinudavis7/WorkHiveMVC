@@ -1,5 +1,6 @@
 ﻿using Helper;
 using Models;
+using Models.ViewModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using WorkHiveServices.Interface;
 
 namespace WorkHiveServices
 {
-    public class UserService:IUserservice
+    public class UserService:IUserService
     {
         public async Task<List<User>> GetUsers()
         {
@@ -27,24 +28,59 @@ namespace WorkHiveServices
             }
             return usersList;
         }
-
-        public async Task<bool> Register(User user)
+        public async Task<User> GetUserDetails(string userId)
+        {
+            User user = new User();
+            try
+            {
+                user = await ApiHelper.GetAsync<User>("api/Users/GetDetails/" + userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return user;
+        }
+        public async Task<bool> UpdateUser(User user)
         {
             try
             {
-                var res = await ApiHelper.PostAsync<bool>("api/Users", user);
+                ProfileViewModel profile = new ProfileViewModel();
+                profile.UserId = user.Id;
+
+                profile.Name = user.UserName;
+                profile.Email = user.Email;
+                profile.Phone = user.PhoneNumber;
+                profile.Location = user.Location;
+                profile.ProfileImage = user.ProfileImage;
+                
+                var res = await ApiHelper.PutAsync<bool>("api/Users/UpdateUser", profile);
                 return res;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+
         }
-        public async Task<User> GetUserDetails(string username,string password)
+        public async Task<bool> Register(RegisterRequest user)
         {
             try
             {
-                var res = await ApiHelper.GetAsync<User>("api/Users/GetUserDetails?username="+ username+ "&password="+password);
+                var res = await ApiHelper.PostAsync<bool>("api/Users/Register", user);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        
+        }
+        public async Task<LoginResponse> Login(string username,string password)
+        {
+            try
+            {
+                var res = await ApiHelper.PostAsync<LoginResponse>("api/Users/login",new  { Username = username ,Password= password });
 
                 return res;
             }
