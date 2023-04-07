@@ -1,0 +1,43 @@
+﻿@inject IConfiguration Configuration
+@{
+    var apiKey = Configuration["GoogleMapsApiKey"];
+    ViewData["Title"] = "FreelancersMapView";
+    Layout = null;
+    
+}
+
+<div id="map"></div>
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 53.3704338224, lng: -1.47098856607 },
+            zoom: 12,
+            //apiKey: googleMapsApiKey
+        });
+        $.ajax({
+            url: '/Freelancer/GetFreelancers',
+            type: 'GET',
+            dataType: 'json',
+            success: function (markers) {
+                console.log(markers[0].lat)
+                for (var i = 0; i < markers.length; i++) {
+                    var marker = new google.maps.Marker({
+                        position: { lat: markers[i].lat, lng: markers[i].lng },
+                        map: map,
+                        title: markers[i].name,
+                    });
+                    // Create a new info window object
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: '<a href=/Freelancer/Profile?userId=' + markers[i].id + '>' + markers[i].name + '</a>'
+                    });
+
+                    // Open the info window on the marker
+                    infoWindow.open(map, marker);
+                }
+            }
+        });
+    
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtvewwWEKWf1GDwj5DreWssnNA263i1B8&callback=initMap&libraries=places"></script>
+

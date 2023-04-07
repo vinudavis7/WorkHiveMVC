@@ -66,14 +66,14 @@
         text-transform: capitalize;
     }
     /* Search Form */
-    .parallax-search .trip-search {
-        background: #edeff1;
-        padding: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.88);
-        border-radius: 5px;
-        text-align: left;
-        margin-top: 30px;
-    }
+.parallax-search .trip-search {
+    background: #edeff1;
+    padding: 10px;
+   +
+    text-align: left;
+    margin-top: 30px;
+    background-color: rgba(255, 255, 255, .4);
+}
 
         .parallax-search .trip-search .form {
             line-height: 0px;
@@ -580,7 +580,7 @@ section.popular-job {
     }
 
     .popular-job-item:hover:before {
-        background: blue;
+        background: teal;
         width: 100%;
         height: 100%;
         left: 0;
@@ -1000,3 +1000,4 @@ section.featured-job {
 .apps-image-android {
     height: 70px;
 }
+

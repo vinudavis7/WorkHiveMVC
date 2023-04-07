@@ -119,3 +119,34 @@ footer {
 .pagination {
     display: inline-block;
 }*/
+
+.main
+{
+    margin-top:50px;
+}
+header {
+    position: relative ;
+  
+    z-index: 100;
+    width: 100%;
+    background-color: teal;
+}
+.admin-container {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.nav-link
+{
+    color:white !important;
+    font-weight:bold !important;
+     
+}
+.input-group-addon {
+    /*    background-image: url("path/to/font-awesome/icons/user.png");
+   background-repeat: no-repeat;*/
+    background-position: center;
+    padding: 0 10px;
+}
+#map {
+    height: 400px;
+}

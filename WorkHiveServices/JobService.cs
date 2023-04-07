@@ -15,14 +15,15 @@ namespace WorkHiveServices
 {
     public class JobService:IJobService
     {
-        public async Task<List<Job>> GetJobs(VMJobSearchParams searchParams)
+        public async Task<List<Job>> GetJobs(JobSearchParams searchParams)
         {
             List<Job> jobList=new List<Job>();
             try
             {
-                jobList = await ApiHelper.GetAsync<List<Job>>("api/Jobs?SearchLocation=" + searchParams.SearchLocation 
-                    + "&SearchTitle=" + searchParams.SearchTitle + "&SearchJobType=" + searchParams.SearchJobType + "");
-
+                
+                    jobList = await ApiHelper.GetAsync<List<Job>>("api/Jobs?SearchLocation=" + searchParams.SearchLocation
+                        + "&SearchTitle=" + searchParams.SearchTitle + "&SearchCategory=" + searchParams.SearchCategory + "");
+                
                 //await ApiHelper.SendAsync<List<Job>>("api/Jobs", searchParams);
             }
             catch (Exception ex)
@@ -44,7 +45,19 @@ namespace WorkHiveServices
             }
             return jobDetails;
         }
-
+        public async Task<Job> CreateJob(JobRequest job)
+        {
+            Job jobDetails = new Job();
+            try
+            {
+                jobDetails = await ApiHelper.PostAsync<Job>("api/Jobs", job);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return jobDetails;
+        }
         public async Task<bool> SaveBid(BidRequest bid)
         {
             try

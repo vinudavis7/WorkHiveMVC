@@ -20,7 +20,20 @@ namespace WorkHiveServices
             List<User> usersList=new List<User>();
             try
             {
-                usersList = await ApiHelper.GetAsync<List<User>>("api/Users");
+                usersList = await ApiHelper.GetAsync<List<User>>("api/Users/GetAll");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return usersList;
+        }
+        public async Task<List<User>> GetUsersByRole(string role)
+        {
+            List<User> usersList = new List<User>();
+            try
+            {
+                usersList = await ApiHelper.GetAsync<List<User>>("api/Users/GetUsersByRole/" + role);
             }
             catch (Exception ex)
             {
@@ -41,7 +54,20 @@ namespace WorkHiveServices
             }
             return user;
         }
-        public async Task<bool> UpdateUser(User user)
+        public async Task<bool> CheckIfEmailExists(string email)
+        {
+            try
+            {
+                var res = await ApiHelper.GetAsync<bool>("api/Users/CheckIfEmailExists/"+ email);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+            public async Task<bool> UpdateUser(User user)
         {
             try
             {

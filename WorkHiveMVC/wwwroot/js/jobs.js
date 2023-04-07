@@ -1,17 +1,25 @@
 ﻿function saveBid() {
 
-    var proposal = JSON.stringify({
-        "JobId": $("#JobId").val(),
-        "BidAmount": $("#bidAmount").val(),
-        "ExpectedDate": $("#days").val(), 
-        "Description": $("#description").val(),
-        "Status":"Pending"
-    });
+
+    var JobId = $("#JobId").val()
+    var BidAmount = $("#bidAmount").val()
+    var ExpectedDate = $("#days").val()
+    var Description = $("#description").val()
+    if (BidAmount == "" || Description == "" || ExpectedDate =="") {
+        alert("please enter all fields")
+    } else {
+        var proposal = JSON.stringify({
+            "JobId": JobId,
+            "BidAmount": BidAmount,
+            "ExpectedDate": ExpectedDate,
+            "Description": Description,
+            "Status": "Pending"
+        });
     $.ajax({
         type: "POST",
         url: "/Jobs/SaveBid",
         data: proposal,
-        dataType: "json" , 
+        dataType: "json",
         contentType: 'application/json',
         success: function (data) {
             if (data == true) {
@@ -27,20 +35,27 @@
         }
     });
 }
-
+}
+function clearSearch()
+{
+    $("#searchTitle").val("");
+    $("#searchLocation").val("");
+    $("#searchCategory").val("");
+    location.reload();
+}
 function search() {
     var searchTitle = $("#searchTitle").val();
     var searchLocation = $("#searchLocation").val();
+    var searchCategory = $("#searchCategory option:selected").text();
+
     $("#loader").show()
     var search = JSON.stringify({
         "SearchLocation": searchLocation ,
         "SearchTitle": searchTitle,
-        "SearchJobType": "",
-        "ClientID":0,
+        "SearchCategory": searchCategory,
+        "ClientID":"0",
 
     });
-    console.log(search)
-
     $.ajax({
         type: "POST",
         url: "/Jobs/Search",
@@ -63,3 +78,55 @@ function search() {
 
 
 }
+
+function loadMapView() {
+   
+    $("#loader").show()
+
+    $.ajax({
+        type: "POST",
+        url: "/Freelancer/GetFreelancers",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: function (data) {
+            $("#mapView").empty();
+            $("#mapView").append(data)
+            $("#loader").hide()
+        },
+    });
+}
+$(function () {
+    $("#formCreateJob").submit(function () {
+        var category = $("#CategoryId").val();
+        var title = $("#Title").val();
+        var description = $("#Description").val();
+        var skillTags = $("#SkillTags").val();
+        var budget = $("#Budget").val();
+        var isvalid = true;
+        if (category == '') {
+            $("#errorCategory").css("display", "block");
+            isvalid = false;
+        }
+        if (title == undefined || title == '') {
+            $("#errorTitle").css("display", "block");
+            isvalid = false;
+        }
+        if (description == undefined || description == '') {
+            $("#errorDescription").css("display", "block");
+            isvalid = false;
+        }
+        if (skillTags == undefined || skillTags == '') {
+            $("#errorSkillTags").css("display", "block");
+            isvalid = false;
+        }
+        if (budget == undefined || budget == '') {
+            $("#errorBudget").css("display", "block");
+            isvalid = false;
+        }
+
+        return isvalid;
+    });
+});
+

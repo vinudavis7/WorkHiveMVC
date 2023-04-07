@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 namespace Models
 {
     public class Contract
-    { 
-  public int ContractId { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
-    public DateTime DateCreated { get; set; }
-    public string Description { get; set; }
+    {
+        public int ContractId { get; set; }
+        public string Description { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime DateCreated { get; set; }     
+        public virtual Bid bid { get; set; }
 
-    public virtual Bid bid { get; set; }
-
-}
+    }
 }

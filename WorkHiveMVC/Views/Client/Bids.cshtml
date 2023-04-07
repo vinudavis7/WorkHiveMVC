@@ -4,18 +4,19 @@
     ViewData["Title"] = "ViewProposals";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1 class="text-center"> Bids</h1>
-
+<br />
+<h4 class="text-center"> Bids</h4>
+<hr />
+<br />
+<br />
 <div class="container">
-
-    <table class="table">
-        <thead>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
             <tr>
-
                 <th>
-@*                    @Html.DisplayNameFor(model => model.Job.Title)
-*@                </th>
+                    @*                    @Html.DisplayNameFor(model => model.Job.Title)
+                    *@
+                </th>
                 <th>
                     Freelancer
                 </th>
@@ -31,7 +32,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
                 </th>
-              
+
                 <th></th>
             </tr>
         </thead>
@@ -41,11 +42,12 @@
                 <tr>
 
                     <td>
-@*                        @Html.DisplayFor(modelItem => item.Job.Title)
-*@                    </td>
+                        @*                        @Html.DisplayFor(modelItem => item.Job.Title)
+                    *@
+                    </td>
                     <th>
-@*                        @Html.ActionLink(item.Freelancer.UserDetails.Name, "Profile", "Freelancer",new { userId = item.Freelancer.UserDetails.UserId }, htmlAttributes:null )
-*@
+                        @*                        @Html.ActionLink(item.Freelancer.UserDetails.Name, "Profile", "Freelancer",new { userId = item.Freelancer.UserDetails.UserId }, htmlAttributes:null )
+                    *@
                     </th>
                     <td>
                         @Html.DisplayFor(modelItem => item.BidAmount)
@@ -65,9 +67,9 @@
                             <input type="button" class="btn btn-success" onclick="ConfirmAcceptProposal(@item.BidId)" value="Accept" />
                         }
 
-                        </td>
-                       
-                    </tr>
+                    </td>
+
+                </tr>
             }
         </tbody>
     </table>

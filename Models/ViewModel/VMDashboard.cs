@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace Models.ViewModel
 {
- 
-        public class VMDashboard
-        {
-            public IEnumerable<User> PopularFreelancers { get; set; }
-            public IEnumerable<Job> RecentJobs { get; set; }
-            public IEnumerable<Category> PopularCategories { get; set; }
 
-
-        
+    public class VMDashboard
+    {
+        public IEnumerable<User> PopularFreelancers { get; set; }
+        public IEnumerable<Job> RecentJobs { get; set; }
+        public IEnumerable<Category> PopularCategories { get; set; }
     }
 }

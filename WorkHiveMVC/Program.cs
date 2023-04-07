@@ -1,3 +1,9 @@
+using Helper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Models;
+using System;
+using System.Configuration;
 using WorkHiveServices;
 using WorkHiveServices.Interface;
 
@@ -15,13 +21,25 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+
+var builder1 = new ConfigurationBuilder()
+    .SetBasePath(AppContext.BaseDirectory)
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+ApiHelper.Configuration = builder1.Build();
+
+
+
 //Add services
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJobService, JobService>();
 //builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IFreelancerService, FreelancerService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
 
@@ -40,7 +58,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+// Use Identity
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 

@@ -4,59 +4,57 @@
     ViewData["Title"] = "ViewProposals";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h1 class="text-center"> Proposals</h1>
-
-<div class="container"> 
-<table class="table">
-    <thead>
-        <tr>
-            
-            <th>
-@*                @Html.DisplayNameFor(model => model.Job.Title)
-*@            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.BidAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpectedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @*                @Html.DisplayNameFor(model => model.Job.Title)
+                    *@
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BidAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExpectedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
                 </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-           
-            <td>
-@*                @Html.DisplayFor(modelItem => item.Job.Title)
-*@            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BidAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpectedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @*                @Html.DisplayFor(modelItem => item.Job.Title)
+                    *@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BidAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpectedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

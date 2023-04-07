@@ -12,6 +12,9 @@ namespace WorkHiveServices.Interface
     {
         public Task<List<User>> GetUsers();
         public Task<User> GetUserDetails(string userId);
+        public  Task<List<User>> GetUsersByRole(string role);
+        public Task<bool> CheckIfEmailExists(string email);
+
         public Task<bool> Register(RegisterRequest user);
         public Task<bool> UpdateUser(User user);
         public  Task<LoginResponse> Login(string username, string password);

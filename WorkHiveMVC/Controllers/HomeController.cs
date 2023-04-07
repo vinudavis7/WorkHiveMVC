@@ -15,16 +15,26 @@ namespace WorkHiveMVC.Controllers
         {
             _homeService = homeService;
         }
-  
 
-
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index()
         {
-            var data = await _homeService.GetDashboardData();
-            return View("LandingPage", data);
+            try
+            {
+                var data = await _homeService.GetDashboardData();
+                return View("LandingPage", data);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
-   
+        public ActionResult Error()
+        {
+            return View();
+        }
+
+
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Models;
 using Models.ViewModel;
 using System.Drawing.Printing;
 using WorkHiveServices;
@@ -11,99 +12,92 @@ namespace WorkHiveMVC.Controllers
 {
     public class AdminController : Controller
     {
-       // private readonly IAdminService _adminService;
+        // private readonly IAdminService _adminService;
         private readonly IJobService _jobService;
         private readonly IUserService _userservice;
         private readonly IHomeService _homeService;
+        private readonly ICategoryService _categoryService;
 
-            
-            public AdminController(IJobService jobService, IUserService userService, IHomeService homeService)
+        int pageSize = 10;
+        int pageNumber = 1;
+
+        public AdminController(IJobService jobService, IUserService userService, IHomeService homeService, ICategoryService categoryService)
         {
             _jobService = jobService;
             _userservice = userService;
-                _homeService = homeService;
-            }
-        // GET: AdminController
+            _homeService = homeService;
+            _categoryService = categoryService;
+        }
         public async Task<ActionResult> Dashboard()
         {
-            var data = await _homeService.GetDashboardSummary();
-            ViewBag.data = data;
-            return View();
+            try
+            {
+                IDictionary<string, int> data = await _homeService.GetDashboardSummary();
+                ViewBag.data = data;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
-
-        // GET: AdminController/Details/5
         public async Task<ActionResult> Users(int? page)
         {
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            var usersList = await _userservice.GetUsers();
-            return View(usersList.ToPagedList(pageNumber, pageSize));
+            try
+            {
+                pageNumber = (page ?? 1);
+                var usersList = await _userservice.GetUsers();
+                return View(usersList.ToPagedList(pageNumber, pageSize));
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
-        // GET: AdminController/Create
         public async Task<ActionResult> Jobs(int? page)
         {
-            VMJobSearchParams obj= new VMJobSearchParams();
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            var jobs = await _jobService.GetJobs(obj);
-            return View(jobs.ToPagedList(pageNumber, pageSize));
+            try
+            {
+                JobSearchParams searchOptions = new JobSearchParams();
+                pageNumber = (page ?? 1);
+                var jobs = await _jobService.GetJobs(searchOptions);
+                return View(jobs.ToPagedList(pageNumber, pageSize));
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
-        // POST: AdminController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+
+        public async Task<ActionResult> Category(int? page)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                pageNumber = (page ?? 1);
+                var categoryList = await _categoryService.GetCategory();
+                return View(categoryList.ToPagedList(pageNumber, pageSize));
             }
             catch
             {
-                return View();
+                return RedirectToAction("Error", "Home");
             }
+
         }
 
-        // GET: AdminController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: AdminController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<bool> CreateCategory(string categoryName)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _categoryService.CreateCategory(categoryName);
+                return result;
             }
             catch
             {
-                return View();
-            }
-        }
-
-        // GET: AdminController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AdminController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                return false;
             }
         }
     }

@@ -41,12 +41,14 @@ namespace WorkHiveServices
                 profile.Email = user.Email;
                 profile.Phone = user.PhoneNumber;
                 profile.Location = user.Location;
-                profile.ProfileImage = user.ProfileImage;
+                profile.ProfileImage = string.IsNullOrEmpty(user.ProfileImage)?string.Empty: user.ProfileImage;
                 profile.Skills = user.Profile.Skills;
-                profile.Experience = (int)user.Profile.Experience;
+                profile.Experience = user.Profile.Experience;
                 profile.Designation = user.Profile.Designation;
                 profile.Description = user.Profile.Description;
-                profile.HourlyRate = (double)user.Profile.HourlyRate;
+                profile.HourlyRate = user.Profile.HourlyRate;
+                profile.LocationCordinates = user.Profile.LocationCordinates;
+
                 var vresult = await ApiHelper.PutAsync<bool>("api/Users/UpdateProfile", profile);
             }
             catch (Exception ex)

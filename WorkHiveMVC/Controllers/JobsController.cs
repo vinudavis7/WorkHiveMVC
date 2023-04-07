@@ -6,42 +6,76 @@ using Models.ViewModel;
 using System.Data;
 using WorkHiveServices;
 using WorkHiveServices.Interface;
+using X.PagedList;
 
 namespace WorkHiveMVC.Controllers
 {
     public class JobsController : Controller
     {
         private readonly IJobService _jobService;
-        public JobsController(IJobService jobService)
+        private readonly ICategoryService _categoryService;
+        public JobsController(IJobService jobService, ICategoryService categoryService)
         {
             _jobService = jobService;
-        }
-       
-        public async Task<IActionResult> JobSearch(string? searchLocation, string? searchTitle)
-        {
-           //var jobsList= await _jobService.GetJobs(searchLocation, searchTitle,"","");
-            ViewBag.SearchTitle = searchTitle;
-            ViewBag.SearchLocation = searchLocation;
-            ViewBag.JobType = "";
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Search([FromBody] VMJobSearchParams searchParams)
-        {
-            string jobType = "";
-            var jobsList = await _jobService.GetJobs(searchParams);
-            ViewBag.SearchTitle = searchParams.SearchTitle;
-            ViewBag.SearchLocation = searchParams.SearchLocation;
-            ViewBag.JobType = jobType;
-            return PartialView("_PartialViewJobCard", jobsList);
+            _categoryService = categoryService;
         }
 
+        public async Task<IActionResult> JobSearch(string? searchLocation, string? searchTitle, string? SearchCategory)
+        {
+            try
+            {
+                List<Category> categoryList = await _categoryService.GetCategory();
+                List<SelectListItem> items = new List<SelectListItem>();
+                items.Add(new SelectListItem { Value = "", Text = "All" });
+                foreach (var cat in categoryList)
+                {
+                    items.Add(new SelectListItem { Value = cat.CategoryId.ToString(), Text = cat.CategoryName });
+                }
+                ViewBag.Category = items;
+                ViewBag.SearchTitle = !string.IsNullOrEmpty(searchTitle) ? searchTitle : "";
+                ViewBag.SearchLocation = !string.IsNullOrEmpty(searchLocation) ? searchLocation : "";
+                ViewBag.JobType = "";
+                ViewBag.SearchCategory = !string.IsNullOrEmpty(SearchCategory) ? SearchCategory : "";
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Search([FromBody] JobSearchParams searchParams, int? page)
+        {
+            try
+            {
+                if (searchParams == null)
+                { searchParams = new JobSearchParams(); }
+                var jobsList = await _jobService.GetJobs(searchParams);
+                ViewBag.SearchTitle = searchParams.SearchTitle;
+                ViewBag.SearchLocation = searchParams.SearchLocation;
+                ViewBag.SearchCategory = searchParams.SearchCategory;
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return PartialView("_PartialViewJobCard", jobsList.ToPagedList(pageNumber, pageSize));
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
 
         public async Task<IActionResult> JobDetails(int jobId)
         {
-            var jobDetails = await _jobService.GetJobDetails(jobId);
-
-            return View(jobDetails);
+            try
+            {
+                var jobDetails = await _jobService.GetJobDetails(jobId);
+                return View(jobDetails);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         public async Task<IActionResult> CreateJob()
@@ -54,7 +88,7 @@ namespace WorkHiveMVC.Controllers
             try
             {
 
-                string userId =HttpContext.Session.GetString("loggedInUserId");
+                string userId = HttpContext.Session.GetString("loggedInUserId");
                 bid.UserId = userId;
                 var result = await _jobService.SaveBid(bid);
                 return result;
@@ -65,22 +99,6 @@ namespace WorkHiveMVC.Controllers
             }
         }
 
-        [NonAction]
-        public SelectList ToSelectList(DataTable table, string valueField, string textField)
-        {
-            List<SelectListItem> list = new List<SelectListItem>();
-
-            foreach (DataRow row in table.Rows)
-            {
-                list.Add(new SelectListItem()
-                {
-                    Text = row[textField].ToString(),
-                    Value = row[valueField].ToString()
-                });
-            }
-
-            return new SelectList(list, "Value", "Text");
-        }
 
     }
 }
