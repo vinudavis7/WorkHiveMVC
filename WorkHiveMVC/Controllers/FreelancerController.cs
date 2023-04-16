@@ -4,6 +4,7 @@ using Models;
 using WorkHiveServices;
 using WorkHiveServices.Interface;
 using Microsoft.AspNetCore.Http;
+using Models.ViewModel;
 
 namespace WorkHiveMVC.Controllers
 {
@@ -12,12 +13,14 @@ namespace WorkHiveMVC.Controllers
         string userId = "";
         private readonly IFreelancerService _freelancerService;
         private readonly IUserService _userservice;
-        public FreelancerController(IFreelancerService freelancerService, IUserService userService, IHttpContextAccessor httpContextAccessor)
+        private readonly IReviewService _reviewService;
+
+        public FreelancerController(IFreelancerService freelancerService, IUserService userService, IHttpContextAccessor httpContextAccessor, IReviewService reviewService)
         {
             _freelancerService = freelancerService;
             _userservice = userService;
             userId = httpContextAccessor.HttpContext.Session.GetString("loggedInUserId");
-
+            _reviewService = reviewService;
         }
 
         public async Task<ActionResult> FreelancersMapView()
@@ -37,6 +40,12 @@ namespace WorkHiveMVC.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
+        }
+        public  async Task<bool> SaveReview([FromBody]ReviewRequest review)
+        {
+            review.ClientId = userId;
+            var result =await _reviewService.CreateReview(review);
+            return result;
         }
         public async Task<List<object>> GetFreelancers()
         {

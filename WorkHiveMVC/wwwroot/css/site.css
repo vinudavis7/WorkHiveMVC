@@ -150,3 +150,34 @@ header {
 #map {
     height: 400px;
 }
+.rate-base-layer {
+    color: #aaa;
+}
+
+.rate-hover-layer {
+    color: orange;
+}
+.rate,.rate1 {
+    font-size: 35px;
+}
+/*.rate-select-layer span
+{
+    color:white;
+}*/
+
+.rate .rate-select-layer {
+    color: orange;
+}
+    .rate1 .rate-select-layer {
+        color: dimgray;
+    }
+.unchecked
+{
+    color:dimgray !important
+}
+.recent-reviews
+{
+
+    height:230px;
+    overflow:scroll;
+}

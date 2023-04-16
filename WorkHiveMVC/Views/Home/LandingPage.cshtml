@@ -191,22 +191,21 @@
                                         <span class="fr-position">todo</span>
                                     </div>
                                     <ul class="starts text-center">
-                                        <span class="mr-2">4.5</span>
+                                        @{
+
+                                            int rating = item.Profile.Rating != null ? (int)item.Profile.Rating:0;
+                                        }
+                                    
+                                        @for (int i = rating; i > 0; i--) {
                                         <li>
-                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star checked"></i>
                                         </li>
+                                        }
+                                        @for (int i = 5 - rating; i > 0; i--)  {
                                         <li>
-                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star unchecked"></i>
                                         </li>
-                                        <li>
-                                            <i class="fa fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-star-half"></i>
-                                        </li>
+                                        }
                                     </ul>
                                 </div>
                                 <div class="fr-grid-info">

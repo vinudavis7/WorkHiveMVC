@@ -2,10 +2,20 @@ using Helper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Serilog.Events;
+using Serilog;
 using System;
 using System.Configuration;
 using WorkHiveServices;
 using WorkHiveServices.Interface;
+
+Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .WriteTo.File("Logs/log-{Date}.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();
@@ -40,6 +50,7 @@ builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IFreelancerService, FreelancerService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 
 
