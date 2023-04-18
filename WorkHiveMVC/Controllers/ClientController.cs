@@ -9,7 +9,6 @@ namespace WorkHiveMVC.Controllers
 {
     public class ClientController : Controller
     {
-        string userId = "";
         private readonly IClientService _clientService;
         private readonly IJobService _jobService;
         private readonly IUserService _userService;
@@ -22,13 +21,13 @@ namespace WorkHiveMVC.Controllers
             _jobService = jobService;
             _userService = userService;
             _categoryService = categoryService;
-            userId = HttpContext.Session.GetString("loggedInUserId");
 
         }
         public async Task<ActionResult> Bids()
         {
             try
             {
+                string userId = HttpContext.Session.GetString("loggedInUserId");
                 var details = await _clientService.GetBids(userId);
                 return View(details);
             }
@@ -41,6 +40,7 @@ namespace WorkHiveMVC.Controllers
         {
             try
             {
+                string userId = HttpContext.Session.GetString("loggedInUserId");
                 JobSearchParams param = new JobSearchParams();
                 param.ClientID = userId;
                 var jobsList = await _jobService.GetJobs(param);
@@ -74,6 +74,7 @@ namespace WorkHiveMVC.Controllers
         {
             try
             {
+                string userId = HttpContext.Session.GetString("loggedInUserId");
                 job.UserId = userId;
                 job.DatePosted = DateTime.Now;
                 var user = await _jobService.CreateJob(job);
@@ -89,6 +90,7 @@ namespace WorkHiveMVC.Controllers
         {
             try
             {
+                string userId = HttpContext.Session.GetString("loggedInUserId");
                 var user = await _userService.GetUserDetails(userId);
                 return View(user);
             }
@@ -98,10 +100,20 @@ namespace WorkHiveMVC.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> EditProfile(User user)
+        public async Task<ActionResult> EditProfile(User user, IFormFile fileUpload)
         {
             try
             {
+                if (fileUpload != null && fileUpload.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await fileUpload.CopyToAsync(memoryStream);
+                        var imageData = memoryStream.ToArray();
+                        var base64String = Convert.ToBase64String(imageData);
+                        user.ProfileImage = base64String;
+                    }
+                }
                 var details = await _userService.UpdateUser(user);
                 return RedirectToAction("EditProfile");
             }

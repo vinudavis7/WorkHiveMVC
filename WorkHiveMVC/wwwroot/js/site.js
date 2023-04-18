@@ -20,7 +20,7 @@ function OpenBidPopup() {
         $('#myModalproposal').modal('show');
     }
     else {
-        alert("please login to submit bid")
+        alert("please login as freelancer to submit bid")
     }
 
 }

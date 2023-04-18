@@ -74,11 +74,10 @@
                     <a href="#" onclick="searchJobByCategory('@item.CategoryName')">
                         <div class="popular-job-item">
 
-                            <span class="step-point">01</span>
+                           @* <span class="step-point">01</span>*@
 
                             <i class="fas fa-laptop-code"></i>
                             <h5>@item.CategoryName</h5>
-                            <p>500 Jobs</p>
 
                         </div>
                     </a>
@@ -128,8 +127,8 @@
                             <div class="job-listing">
                                 <div class="job-title-sec home">
                                     <div class="job-listing-footer">
-                                        <div class="c-logo"> <img src="images/company1.png" alt=""> </div>
-                                        <h3>
+@*                                        <div class="c-logo"> <img src="images/company1.png" alt=""> </div>
+*@                                        <h3>
                                             @Html.ActionLink(item.Title,"JobDetails","Jobs",new { jobId = item.JobId }, null)
                                         </h3>
                                         <ul>
@@ -171,14 +170,22 @@
                     <div class="slick-track" style="opacity: 1; width: 2160px; transform: translate3d(0px, 0px, 0px);">
                         @foreach (var item in Model.PopularFreelancers)
                         {
-
                             <div class="agents-grid slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" style="width: 330px;" tabindex="0" role="tabpanel" id="slick-slide00" aria-describedby="slick-slide-control00">
                                 <div class="agent-call"><a href="#" tabindex="0"><i class="fas fa-medal"></i></a></div>
                                 <div class="agents-grid-wrap">
                                     <div class="fr-grid-thumb">
                                         <a href="candidate-profile.html" tabindex="0">
                                             <div class="overall-rate"><i class="fas fa-check"></i></div>
-                                            <img src="images/person.jpg" class="img-fluid mx-auto" alt="">
+                                                @{if(!string.IsNullOrEmpty( item.ProfileImage))
+                                                {
+                                                        <img src="data:image/png;base64,@item.ProfileImage" class="img-fluid mx-auto" alt="">
+                                                }
+                                                else
+                                                {
+                                                        <img src="images/noimage.jpg" class="img-fluid mx-auto" alt="">
+
+                                                }
+                                                }
                                         </a>
                                     </div>
                                     <div class="fr-grid-deatil">

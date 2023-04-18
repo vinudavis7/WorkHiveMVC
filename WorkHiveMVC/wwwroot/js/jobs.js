@@ -104,6 +104,7 @@ $(function () {
         var description = $("#Description").val();
         var skillTags = $("#SkillTags").val();
         var budget = $("#Budget").val();
+        var deadline = $("#Deadline").val().trim()
         var isvalid = true;
         if (category == '') {
             $("#errorCategory").css("display", "block");
@@ -123,6 +124,10 @@ $(function () {
         }
         if (budget == undefined || budget == '') {
             $("#errorBudget").css("display", "block");
+            isvalid = false;
+        }
+        if (deadline == undefined || deadline == '') {
+            $("#errordeadline").css("display", "block");
             isvalid = false;
         }
 
