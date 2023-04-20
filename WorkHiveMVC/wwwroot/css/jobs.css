@@ -24,3 +24,43 @@
 .tab-active {
     border-bottom: 6px solid teal !important;
 }
+
+.job-list
+{
+    margin-left:5% !important;
+}
+
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+        .pagination li.active span {
+            color: white;
+            background-color: black;
+            border: 1px solid black;
+            padding: 5px 10px;
+        }
+
+        .pagination li:not(.active) a {
+            color: teal;
+            text-decoration: none;
+            border: 1px solid black;
+            padding: 5px 10px;
+        }
+
+            .pagination li:not(.active) a:hover {
+                background-color: black;
+                color: white;
+            }
+#job-name
+{
+    color:black !important;
+}

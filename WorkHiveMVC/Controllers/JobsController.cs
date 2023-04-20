@@ -7,6 +7,7 @@ using System.Data;
 using WorkHiveServices;
 using WorkHiveServices.Interface;
 using X.PagedList;
+using Microsoft.CognitiveServices.Speech;
 
 namespace WorkHiveMVC.Controllers
 {
@@ -96,6 +97,22 @@ namespace WorkHiveMVC.Controllers
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+
+        public async void ReadJobDescription()
+        {
+            string subscriptionKey = "ad9800191ebb43b88cbfcd018af7c751";
+            string region = "eastus"; // use your region instead
+            SpeechConfig speechConfig = SpeechConfig.FromSubscription(subscriptionKey, region);
+            speechConfig.SpeechSynthesisVoiceName = "en-US-JennyNeural";
+            string message = "Hello world";
+            using (SpeechSynthesizer synthesizer = new SpeechSynthesizer(speechConfig))
+            {
+                using (SpeechSynthesisResult result = await synthesizer.SpeakTextAsync(message))
+                {
+                    Console.WriteLine($"Speech resulted in status: {result.Reason}");
+                }
             }
         }
 

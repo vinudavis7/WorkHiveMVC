@@ -12,7 +12,7 @@
 
         <ul class="nav nav-tabs">
             <li class="active col-md-6">
-                <a data-toggle="tab" id="jobsearch" class="btn tab-active col-md-12" href="#jobs">Jobs Search</a>
+                <a data-toggle="tab" id="jobsearch" class="btn tab-active  col-md-12" href="#jobs">Jobs Search</a>
             </li>
             <li class=" col-md-6">
                 <a data-toggle="tab" id="freelancersearch" class="btn  col-md-12" href="#freelancers">Freelancers near me</a>
@@ -24,10 +24,10 @@
             <div id="jobs" class="tab-pane fade in active show">
                 <div class="row">
                     <div class="col-md-3">
-                        <span>Job Title</span><input type="text" id="searchTitle" value="@ViewBag.SearchTitle" name="searchRole" class="form-control" placeholder="Role eg. PHP developer" />
+                        <span>Job Title</span><input type="text" id="searchTitle" value="@ViewBag.SearchTitle" name="searchRole" class="form-control" placeholder="eg. Mobile app" />
                     </div>
                     <div class="col-md-3">
-                        <span>Location</span><input type="text" id="searchLocation" value="@ViewBag.SearchLocation" name="searchLocation" class="form-control" placeholder=" Location eg. Sheffield" />
+                        <span>Location</span><input type="text" id="searchLocation" value="@ViewBag.SearchLocation" name="searchLocation" class="form-control" placeholder="eg. Sheffield" />
                     </div>
                     <div class="col-md-3">
                         <span>Category</span>
@@ -37,10 +37,10 @@
                         <br />
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="button" class="btn btn-primary form-control" value="search" onclick="search()" />
+                                <input type="button" class="btn theme-color form-control" value="search" onclick="search()" />
                             </div>
                             <div class="col-md-6">
-                                <input type="button" class="btn btn-primary form-control" value="Clear" onclick="clearSearch()" />
+                                <input type="button" class="btn theme-color form-control" value="Clear" onclick="clearSearch()" />
                             </div>
                         </div>
                     </div>

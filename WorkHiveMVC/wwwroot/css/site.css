@@ -181,3 +181,28 @@ header {
     height:230px;
     overflow:scroll;
 }
+.login-icon {
+    padding: 10px;
+    background: teal;
+    color: white;
+    min-width: 40px;
+    text-align: center;
+}
+.login-items {
+    display: flex;
+}
+
+#myModalLogin .modal-content {
+    height: 300px;
+    width: 350px;
+}
+.login-img {
+    width: 60px;
+    margin-left: 35%;
+    margin-top: 10%;
+    margin-bottom: 20px;
+}
+.theme-color{
+    background-color:teal !important;
+    color:white !important;
+}
