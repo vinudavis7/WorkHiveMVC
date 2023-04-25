@@ -12,12 +12,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .WriteTo.File("Logs/log-{Date}.txt", rollingInterval: RollingInterval.Day)
-            .CreateLogger();
+    .MinimumLevel.Error()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Year)
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -47,7 +47,8 @@ var builder1 = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 ApiHelper.Configuration = builder1.Build();
 
-
+//for error logging
+builder.Host.UseSerilog();
 
 //Add services
 builder.Services.AddScoped<IUserService, UserService>();
