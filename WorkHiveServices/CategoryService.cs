@@ -21,18 +21,18 @@ namespace WorkHiveServices
             try
             {
                 list = await ApiHelper.GetAsync<List<Category>>("api/Category/GetAll/");
+                return list;
             }
             catch (Exception ex)
             {
                 throw ex;
-            }
-            return list;
+            }        
         }
         public async Task<bool> CreateCategory(string categoryName)
         {
             try
             {
-               var category = await ApiHelper.PostAsync<Category>("api/Category/", categoryName);
+                var category = await ApiHelper.PostAsync<Category>("api/Category/", categoryName);
                 if (category.CategoryId > 0)
                     return true;
                 else

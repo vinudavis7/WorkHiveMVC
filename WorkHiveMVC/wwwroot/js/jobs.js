@@ -5,7 +5,7 @@
     var BidAmount = $("#bidAmount").val()
     var ExpectedDate = $("#days").val()
     var Description = $("#description").val()
-    if (BidAmount == "" || Description == "" || ExpectedDate =="") {
+    if (BidAmount == "" || Description == "" || ExpectedDate == "") {
         alert("please enter all fields")
     } else {
         var proposal = JSON.stringify({
@@ -15,29 +15,28 @@
             "Description": Description,
             "Status": "Pending"
         });
-    $.ajax({
-        type: "POST",
-        url: "/Jobs/SaveBid",
-        data: proposal,
-        dataType: "json",
-        contentType: 'application/json',
-        success: function (data) {
-            if (data == true) {
-                alert("Bid submitted successfully")
-                $('#myModalproposal').hide();
-                $('.modal-backdrop').remove()
+        $.ajax({
+            type: "POST",
+            url: "/Jobs/SaveBid",
+            data: proposal,
+            dataType: "json",
+            contentType: 'application/json',
+            success: function (data) {
+                if (data == true) {
+                    alert("Bid submitted successfully")
+                    $('#myModalproposal').hide();
+                    $('.modal-backdrop').remove()
+                }
+                else
+                    alert("Operation failed")
+            },
+            error: function () {
+                alert("Error occured!!")
             }
-            else
-                alert("Operation failed")
-        },
-        error: function () {
-            alert("Error occured!!")
-        }
-    });
+        });
+    }
 }
-}
-function clearSearch()
-{
+function clearSearch() {
     $("#searchTitle").val("");
     $("#searchLocation").val("");
     $("#searchCategory").val("");
@@ -50,10 +49,10 @@ function search() {
 
     $("#loader").show()
     var search = JSON.stringify({
-        "SearchLocation": searchLocation ,
+        "SearchLocation": searchLocation,
         "SearchTitle": searchTitle,
         "SearchCategory": searchCategory,
-        "ClientID":"0",
+        "ClientID": "0",
 
     });
     $.ajax({
@@ -68,11 +67,12 @@ function search() {
         success: function (data) {
             $("#search-result").empty();
             $("#search-result").append(data)
-            $("#loader").hide()        },
+            $("#loader").hide()
+        },
         error: function (data) {
             console.log(data)
             alert("Error occured!!")
-            $("#loader").hide()   
+            $("#loader").hide()
         }
     });
 
@@ -80,7 +80,7 @@ function search() {
 }
 
 function loadMapView() {
-   
+
     $("#loader").show()
 
     $.ajax({

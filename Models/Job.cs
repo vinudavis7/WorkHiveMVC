@@ -17,7 +17,9 @@ namespace Models
         public int Budget { get; set; }
         public string SkillTags { get; set; }
         public string JobType { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+
         public DateTime Deadline { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DatePosted { get; set; }

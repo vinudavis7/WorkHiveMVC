@@ -4,22 +4,22 @@
     ViewData["Title"] = "ViewProposals";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h3 class="text-center"> Proposals</h3>
+<h3 class="text-center"> Bids</h3>
 <div class="container">
     <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.BidAmount)
+                    Bid Amount
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ExpectedDate)
+                    Expected Completion Date
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Description)
+                    Description
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Status)
+                    Status
                 </th>
             </tr>
         </thead>
@@ -45,7 +45,6 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Status)
                         </td>
-
                     </tr>
             }
             }

@@ -21,6 +21,7 @@ namespace Models.ViewModel
         public double? HourlyRate { get; set; }
         public string? Skills { get; set; }
         public string? LocationCordinates { get; set; }
+        public bool ReceiveJobNotifications { get; set; }
 
     }
 }

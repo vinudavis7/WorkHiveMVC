@@ -16,6 +16,8 @@ namespace WorkHiveServices.Interface
         public Task<bool> CheckIfEmailExists(string email);
 
         public Task<bool> Register(RegisterRequest user);
+        public Task<bool> ResetPassword(ResetPasswordRequest user);
+        public Task<bool> ForgotPassword(string email);
         public Task<bool> UpdateUser(User user);
         public  Task<LoginResponse> Login(string username, string password);
     }

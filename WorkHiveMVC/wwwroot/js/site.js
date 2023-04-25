@@ -1,11 +1,9 @@
 ﻿$(document).ready(function () {
-    // Add click event to button1
     $("#jobsearch").click(function () {
         $(this).toggleClass("tab-active"); // toggle class "active"
         $("#freelancersearch").toggleClass("tab-active", !$(this).hasClass("tab-active")); // toggle class "active" on button2 based on button1's class
     });
 
-    // Add click event to button2
     $("#freelancersearch").click(function () {
         $(this).toggleClass("tab-active"); // toggle class "active"
         $("#jobsearch").toggleClass("tab-active", !$(this).hasClass("tab-active")); // toggle class "active" on button1 based on button2's class

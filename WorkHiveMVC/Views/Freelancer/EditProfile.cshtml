@@ -6,13 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
-<style>
-    #map {
-        height: 400px;
-    }
-</style>
-
 <div>
     <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="/Freelancer/Edit">
         <h3 class="text-center">Profile</h3>
@@ -20,10 +13,6 @@
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Profile.ProfileId)
         @Html.HiddenFor(model => model.Profile.LocationCordinates,new { @class = "form-control"})
-
-
-        @*        @Html.HiddenFor(model => model.UserDetails.UserType)
-        *@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-3">
@@ -85,7 +74,12 @@
                         @Html.TextAreaFor(model => model.Profile.Description,new { @class = "form-control",rows=6})
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        @Html.CheckBoxFor(model => model.Profile.ReceiveJobNotifications)
+                        Receive job notifications
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Image</label>
                     <div class="col-sm-10">
@@ -133,7 +127,6 @@
         longitude = parseFloat(coordinatesArray[1]);
     }
 
-
     function initMap() {
 
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -173,17 +166,11 @@
             });
 
             // Set the map center and zoom level
-            // map.setCenter(place.geometry.location);
             var position = marker.getPosition();
             var latLngString = position.lat() + ',' + position.lng();
             $("#Profile_LocationCordinates").val(latLngString)
         });
-
-
     }
-
-
-
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtvewwWEKWf1GDwj5DreWssnNA263i1B8&callback=initMap&libraries=places"></script>
 

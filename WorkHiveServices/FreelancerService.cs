@@ -48,7 +48,7 @@ namespace WorkHiveServices
                 profile.Description = user.Profile.Description;
                 profile.HourlyRate = user.Profile.HourlyRate;
                 profile.LocationCordinates = user.Profile.LocationCordinates;
-
+                profile.ReceiveJobNotifications=user.Profile.ReceiveJobNotifications;
                 var vresult = await ApiHelper.PutAsync<bool>("api/Users/UpdateProfile", profile);
             }
             catch (Exception ex)

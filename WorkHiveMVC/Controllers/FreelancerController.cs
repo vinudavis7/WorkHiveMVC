@@ -5,9 +5,13 @@ using WorkHiveServices;
 using WorkHiveServices.Interface;
 using Microsoft.AspNetCore.Http;
 using Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace WorkHiveMVC.Controllers
 {
+    //only Freelancers will be able to access these action methords
+    [Authorize(Roles = "Freelancer")]
     public class FreelancerController : Controller
     {
         string userId = "";
@@ -19,7 +23,6 @@ namespace WorkHiveMVC.Controllers
         {
             _freelancerService = freelancerService;
             _userservice = userService;
-            userId = httpContextAccessor.HttpContext.Session.GetString("loggedInUserId");
             _reviewService = reviewService;
         }
 
@@ -31,20 +34,20 @@ namespace WorkHiveMVC.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(userId))
+                if (string.IsNullOrEmpty(userId)) 
                     userId = HttpContext.Session.GetString("loggedInUserId");
                 var details = await _freelancerService.GetFreelancerDetails(userId);
                 return View(details);
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
-        public  async Task<bool> SaveReview([FromBody]ReviewRequest review)
+        public async Task<bool> SaveReview([FromBody] ReviewRequest review)
         {
             review.ClientId = userId;
-            var result =await _reviewService.CreateReview(review);
+            var result = await _reviewService.CreateReview(review);
             return result;
         }
         public async Task<List<object>> GetFreelancers()
@@ -56,6 +59,7 @@ namespace WorkHiveMVC.Controllers
                 var usersList = await _userservice.GetUsersByRole("Freelancer");
                 foreach (var user in usersList)
                 {
+                    //creating an object with location cordinates to set in map view
                     string cordinates = user.Profile != null ? user.Profile.LocationCordinates : "";
                     if (!string.IsNullOrEmpty(cordinates))
                     {
@@ -87,7 +91,7 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
 
@@ -97,6 +101,7 @@ namespace WorkHiveMVC.Controllers
             try
 
             {
+                //if  user upload image, convert into base 64 and store in database
                 if (fileUpload != null && fileUpload.Length > 0)
                 {
                     using (var memoryStream = new MemoryStream())
@@ -125,7 +130,7 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
 

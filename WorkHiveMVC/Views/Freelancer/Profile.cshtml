@@ -11,12 +11,8 @@
 <script src="~/js/rater.js"></script>
 <div class="container">
     <div class="main-body">
-        <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-@*                <li class="breadcrumb-item">
-                    <a class="" href="/Client/Proposals"> Proposals</a>
-                </li>*@
                 <li class="breadcrumb-item active" aria-current="page">Profile</li>
             </ol>
         </nav>
@@ -30,8 +26,7 @@
                             <div class="mt-3">
                                 <h4>
                                     @Model.UserName
-                                    <input type="hidden" name="userId" id="userId" value="@Model.Id"
-
+                                    <input type="hidden" name="userId" id="userId" value="@Model.Id"/>
                                 </h4>
                                 <p class="text-secondary mb-1">
                                     @Model.Profile.Designation
@@ -50,45 +45,45 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <h6 class="mb-0">Email</h6>
                             </div>
-                            <div class="col-sm-6 text-secondary">
+                            <div class="col-sm-8 text-secondary">
                                 @Model.Email
                             </div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <h6 class="mb-0">Phone</h6>
                             </div>
-                            <div class="col-sm-6 text-secondary">
+                            <div class="col-sm-8 text-secondary">
                                 @Model.PhoneNumber
                             </div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <h6 class="mb-0">Experience</h6>
                             </div>
-                            <div class="col-sm-6 text-secondary">
+                            <div class="col-sm-8 text-secondary">
                                 @Model.Profile.Experience
                             </div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <h6 class="mb-0">HourlyRate</h6>
                             </div>
-                            <div class="col-sm-6 text-secondary">
+                            <div class="col-sm-8 text-secondary">
                                 @Model.Profile.HourlyRate
                             </div>
                         </div>                  <hr>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <h6 class="mb-0">Skills</h6>
                             </div>
-                            <div class="col-sm-6 text-secondary">
+                            <div class="col-sm-8 text-secondary">
                                 @Model.Profile.Skills
                             </div>
                         </div>
@@ -97,9 +92,10 @@
                 </div>
             </div>
             <div class="col-md-8">
+             
                 <div class="card mb-3">
                     <div class="p-3">
-
+                        <h3>About me</h3>
                         @Model.Profile.Description
                     </div>
                 </div>
@@ -154,7 +150,4 @@
         $(".rate").rate(options);
         $(".rate1").rate(options1);
     });
-
-   
-
 </script>

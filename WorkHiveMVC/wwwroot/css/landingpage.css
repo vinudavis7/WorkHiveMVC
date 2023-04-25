@@ -1,10 +1,4 @@
 ﻿
-
-/*----------------------------------------------*/
-/*--------- 3. PARALLAX IMAGE HOME 1 ----------*/
-/*----------------------------------------------*/
-
-
 @media (min-width: 576px) {
     .container {
         max-width: 540px;
@@ -13,13 +7,13 @@
 
 @media (min-width: 768px) {
     .container {
-         max-width: 720px; 
+        max-width: 720px;
     }
 }
 
 @media (min-width: 992px) {
     .container {
-         max-width: 960px; 
+        max-width: 960px;
     }
 }
 
@@ -28,6 +22,7 @@
         max-width: 1140px;
     }
 }
+
 .parallax-search {
     position: relative;
     background: linear-gradient(rgba(0, 0, 0, 0.63), rgba(0, 0, 0, 0.63)), url('../images/home-bg.jpg') no-repeat center top;
@@ -37,21 +32,21 @@
     height: auto;
 }
 
-   .hero-inner {
-        text-align: center;
-        padding: 190px 0;
-        position: relative;
-    }
-.apps-image
-{
-    padding-bottom:100px;
-    margin:auto;
+.hero-inner {
+    text-align: center;
+    padding: 190px 0;
+    position: relative;
 }
+
+.apps-image {
+    padding-bottom: 100px;
+    margin: auto;
+}
+
 .app-download {
     margin: auto;
-  
- 
 }
+
 .parallax-search .welcome-text p {
     color: #fff;
     font-size: 18px;
@@ -59,97 +54,96 @@
     font-weight: 400;
 }
 
-    .parallax-search .welcome-text h1 {
-        font-size: 40px;
-        color: #fff;
-        line-height: 57px;
-        text-transform: capitalize;
-    }
-    /* Search Form */
+.parallax-search .welcome-text h1 {
+    font-size: 40px;
+    color: #fff;
+    line-height: 57px;
+    text-transform: capitalize;
+}
+/* Search Form */
 .parallax-search .trip-search {
     background: #edeff1;
     padding: 10px;
-   +
-    text-align: left;
+    + text-align: left;
     margin-top: 30px;
     background-color: rgba(255, 255, 255, .4);
 }
 
-        .parallax-search .trip-search .form {
-            line-height: 0px;
-        }
-
-    .parallax-search .form-group {
-        width: 190px;
-        display: inline-block;
-        margin-right: 3px;
-        margin-bottom: 0px;
+    .parallax-search .trip-search .form {
+        line-height: 0px;
     }
 
-        .parallax-search .form-group:last-child {
-            margin-right: 0px;
+.parallax-search .form-group {
+    width: 190px;
+    display: inline-block;
+    margin-right: 3px;
+    margin-bottom: 0px;
+}
+
+    .parallax-search .form-group:last-child {
+        margin-right: 0px;
+    }
+
+    .parallax-search .form-group .nice-select {
+        margin: 0;
+        height: 50px;
+        line-height: 50px;
+        padding: 0 15px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: none;
+        color: $text;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+    }
+
+        .parallax-search .form-group .nice-select:hover {
+            color: Blue;
         }
 
-        .parallax-search .form-group .nice-select {
-            margin: 0;
-            height: 50px;
-            line-height: 50px;
-            padding: 0 15px;
-            border-radius: 5px;
-            border: none;
-            box-shadow: none;
-            color: $text;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 400;
-            font-size: 1rem;
-        }
-
-            .parallax-search .form-group .nice-select:hover {
-                color: Blue;
-            }
-
-            .parallax-search .form-group .nice-select::after {
-                right: 20px;
-                color: #757575;
-            }
-
-            .parallax-search .form-group .nice-select i {
-                color: blue;
-                font-size: 1.2rem;
-                margin-top: 5px;
-                margin-right: 10px;
-            }
-
-        .parallax-search .form-group .list li {
+        .parallax-search .form-group .nice-select::after {
+            right: 20px;
             color: #757575;
         }
 
-            .parallax-search .form-group .list li.selected {
-                color: #757575;
-                font-weight: 400;
-            }
+        .parallax-search .form-group .nice-select i {
+            color: blue;
+            font-size: 1.2rem;
+            margin-top: 5px;
+            margin-right: 10px;
+        }
 
-            .parallax-search .form-group .list li:hover {
-                color: #fff;
-                background: blue;
-            }
+    .parallax-search .form-group .list li {
+        color: #757575;
+    }
 
-       /* .parallax-search .form-group.looking {
+        .parallax-search .form-group .list li.selected {
+            color: #757575;
+            font-weight: 400;
+        }
+
+        .parallax-search .form-group .list li:hover {
+            color: #fff;
+            background: blue;
+        }
+
+/* .parallax-search .form-group.looking {
             width: 350px;
             margin: 0px;
         }*/
 
-    .parallax-search .first-select {
-        height: 30px;
-        border-radius: 5px;
-        margin-right: 4px;
-        border: none;
-        box-shadow: none;
-        color: #757575;
-        font-family: 'Nunito', sans-serif;
-        font-weight: 500;
-        font-size: 16px;
-    }
+.parallax-search .first-select {
+    height: 30px;
+    border-radius: 5px;
+    margin-right: 4px;
+    border: none;
+    box-shadow: none;
+    color: #757575;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+}
 
 .main-search-input-item {
     float: left;
@@ -321,8 +315,8 @@
 }
 
 .trip-search {
-  display:flex;
-  padding:30px;
+    display: flex;
+    padding: 30px;
 }
 
 .video-container {
@@ -540,6 +534,7 @@
         color: #fff;
         border-color: #fff;
     }
+
 .popular-job-item {
     text-align: center;
     background: #fff;
@@ -550,9 +545,10 @@
     overflow: hidden;
     margin-bottom: 30px;
 }
-.popular-job-item a {
-text-decoration:none;
-}
+
+    .popular-job-item a {
+        text-decoration: none;
+    }
 
 section.popular-job {
     padding: 6rem 0;
@@ -631,6 +627,7 @@ section.popular-job {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=10)";
     font-family: "Roboto", sans-serif;
 }
+
 .info-help {
     padding: 6rem 0;
     background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(../images/home-info.jpg) no-repeat scroll center center;
@@ -888,6 +885,7 @@ section.freelancers {
 .slick-arrow.slick-hidden {
     display: none;
 }
+
 .overall-rate {
     position: absolute;
     right: -10px;
@@ -915,10 +913,10 @@ section.freelancers {
         font-size: 38px;
     }
 
-.info-head h3,p
-{
-    color:white;
+.info-head h3, p {
+    color: white;
 }
+
 .job-listing {
     float: left;
     width: 100%;
@@ -983,6 +981,7 @@ section.featured-job {
     justify-content: space-between;
     margin-bottom: 30px;
 }
+
 .sec-title {
     text-align: center;
     padding-bottom: 20px;
@@ -994,10 +993,10 @@ section.featured-job {
     margin-bottom: 20px;
 }
 
-.apps-image-ios{
-    height:50px;
+.apps-image-ios {
+    height: 50px;
 }
+
 .apps-image-android {
     height: 70px;
 }
-

@@ -1,37 +1,48 @@
 ﻿function login() {
+    var isValid = true;
     var email = $("#email").val();
     var password = $("#pwd").val();
-    $.ajax({
-        type: "GET",
-        url: "/User/Login?username=" + email + "&password=" + password,
-        //data: data,  
-        //data: JSON.stringify("asf"),
-        //data: { username: 'may' },
-        contentType: 'application/json',
-        success: function (result) {
-            if (result == "Failed") {
-                alert("Login Failed")
-            } else
-                if (result == "Admin") {
-                    window.location.href = "/Admin/Dashboard";
-                }
-                else {
+    if (email == undefined || email == '') {
+        $("#errorUsername").css("display", "block");
+        isValid = false;
+    }
+    if (password == undefined || password == '') {
+        $("#errorPassword").css("display", "block");
+        isValid = false;
+    }
+    if (isValid) {
+        $.ajax({
+            type: "GET",
+            url: "/User/Login?username=" + email + "&password=" + password,
+            //data: data,  
+            //data: JSON.stringify("asf"),
+            //data: { username: 'may' },
+            contentType: 'application/json',
+            success: function (result) {
+                if (result == "Failed") {
+                    alert("Login Failed")
+                } else
+                    if (result == "Admin") {
+                        window.location.href = "/Admin/Dashboard";
+                    }
+                    else {
 
 
-                    alert("Login successfull")
+                        alert("Login successfull")
 
-                    $('#myModalLogin').hide();
-                    $('.modal-backdrop').remove()
-                    location.reload();
-                }
+                        $('#myModalLogin').hide();
+                        $('.modal-backdrop').remove()
+                        location.reload();
+                    }
 
 
 
-        },
-        error: function () {
-            alert("Error occured!!")
-        }
-    });
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+    }
 }
 
 function CheckIfEmailExists() {
@@ -44,18 +55,18 @@ function CheckIfEmailExists() {
             if (data == true) {
                 $("#errorEmailExist").css("display", "block");
                 $("#btnRegister").prop('disabled', true);
-                
+
             } else {
                 $("#errorEmailExist").prop('disabled', false);
             }
-           
+
         },
         error: function () {
             alert("Error occured!!")
         }
     });
 }
- 
+
 
 function register() {
     var name = $("#name").val();
@@ -88,39 +99,39 @@ function register() {
         isValid = false;
     } else $("#errorLocation").css("display", "none");
     if (isValid) {
-            var data = JSON.stringify({
-                'Name': name,
-                'Phone': phone,
-                'Email': email,
-                'Password': password,
-                'Location': location,
-                'UserType': userType,
-                'ProfileImage': ""
-            });
+        var data = JSON.stringify({
+            'Name': name,
+            'Phone': phone,
+            'Email': email,
+            'Password': password,
+            'Location': location,
+            'UserType': userType,
+            'ProfileImage': ""
+        });
 
-            $.ajax({
-                type: "POST",
-                url: "/User/Register",
-                data: data,
-                //data: JSON.stringify("asf"),
-                //data: { username: 'may' },
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data == true) {
-                        alert("Registration successfull")
-                        window.location.reload();
-                        // $('#myModalRegister').hide();
-                        //$('.modal-backdrop').remove()
+        $.ajax({
+            type: "POST",
+            url: "/User/Register",
+            data: data,
+            //data: JSON.stringify("asf"),
+            //data: { username: 'may' },
+            contentType: 'application/json',
+            success: function (data) {
+                if (data == true) {
+                    alert("Registration successfull")
+                    window.location.reload();
+                    // $('#myModalRegister').hide();
+                    //$('.modal-backdrop').remove()
 
-                    }
-                    else
-                        alert("Operation failed")
-                },
-                error: function () {
-                    alert("Error occured!!")
                 }
-            });
-       
+                else
+                    alert("Operation failed")
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+
     }
 
 }

@@ -1,39 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
 using Models.ViewModel;
+using System.Data;
 using WorkHiveServices;
 using WorkHiveServices.Interface;
 
 namespace WorkHiveMVC.Controllers
 {
+    //this controller has the client related features
+    [Authorize(Roles = "Client")]
     public class ClientController : Controller
     {
-        private readonly IClientService _clientService;
         private readonly IJobService _jobService;
         private readonly IUserService _userService;
         private readonly ICategoryService _categoryService;
 
 
-        public ClientController(IClientService clientService, IJobService jobService, IUserService userService, ICategoryService categoryService)
+        public ClientController( IJobService jobService, IUserService userService, ICategoryService categoryService)
         {
-            _clientService = clientService;
             _jobService = jobService;
             _userService = userService;
             _categoryService = categoryService;
-
         }
         public async Task<ActionResult> Bids()
         {
             try
             {
+                //session Id  stored in session after login is fetched
                 string userId = HttpContext.Session.GetString("loggedInUserId");
-                var details = await _clientService.GetBids(userId);
-                return View(details);
+                var bidList = await _jobService.GetBids(userId);
+                return View(bidList);
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
         public async Task<ActionResult> MyJobs()
@@ -48,7 +50,7 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
         public async Task<ActionResult> CreateJob()
@@ -57,6 +59,7 @@ namespace WorkHiveMVC.Controllers
             {
                 List<Category> categoryList = await _categoryService.GetCategory();
                 List<SelectListItem> items = new List<SelectListItem>();
+                //to populate category dropdown in the create job page
                 foreach (var cat in categoryList)
                 {
                     items.Add(new SelectListItem { Value = cat.CategoryId.ToString(), Text = cat.CategoryName });
@@ -66,7 +69,7 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
         [HttpPost]
@@ -82,7 +85,59 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> EditJob(int jobId)
+        {
+            try
+            {
+                var jobDetails = await _jobService.GetJobDetails(jobId);
+                return View(jobDetails);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { ex = ex});
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditJob(Job jobDetails)
+        {
+            try
+            {
+                var result = await _jobService.UpdateJob(jobDetails);
+                //setting the message in a viewbag to show in the view
+                if (result)
+                    ViewData["message"] = "Job Updated Successfully";
+                else
+                    ViewData["message"] = "Update Failed. Please Try Again.";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { ex = ex});
+            }
+        }
+
+
+        public async Task<ActionResult> DeleteJob(int JobId)
+        {
+            try
+            {
+                var result = await _jobService.DeleteJob(JobId);
+                //setting the message in a viewbag to show in the view
+                if (result)
+                    ViewBag.message = "Job Deleted Successfully";
+                else
+                    ViewBag.message = "Delete Failed. Please Try Again.";
+                return RedirectToAction("MyJobs");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
 
@@ -96,7 +151,7 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
         [HttpPost]
@@ -104,6 +159,7 @@ namespace WorkHiveMVC.Controllers
         {
             try
             {
+                //if user upload image, convert into base64 and save in database
                 if (fileUpload != null && fileUpload.Length > 0)
                 {
                     using (var memoryStream = new MemoryStream())
@@ -119,15 +175,15 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
 
         public async Task<bool> UpdateBidStatus(int bidId)
         {
-            var jobsList = await _clientService.UpdateBidStatus(bidId);
+            //bid status will be updated to accepted
+            var jobsList = await _jobService.UpdateBidStatus(bidId);
             return true;
         }
-
     }
 }

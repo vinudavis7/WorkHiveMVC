@@ -15,8 +15,6 @@ namespace WorkHiveServices
 {
     public class ReviewService : IReviewService
     {
-
-      
         public async Task<bool> CreateReview(ReviewRequest review)
         {
             try

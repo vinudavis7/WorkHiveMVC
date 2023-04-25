@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<Models.Job>
 
 @{
+    string message = ViewData["message"] != null ? ViewData["message"].ToString():"";
     ViewData["Title"] = "MyJobs";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 <br />
 <h4 class="text-center"> My Jobs</h4>
 <hr />
 <br />
 <br />
+<h5 class="text-success text-center"> @message</h5>
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
@@ -76,9 +76,8 @@
                         @Html.DisplayFor(modelItem => item.DatePosted)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        @Html.ActionLink("Edit", "EditJob", new { jobId=item.JobId }) |
+                        @Html.ActionLink("Delete", "DeleteJob", new { jobId=item.JobId })
                     </td>
                 </tr>
             }

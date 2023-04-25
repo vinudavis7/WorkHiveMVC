@@ -1,33 +1,35 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
 .nav-items {
     float: right;
     text-align: end;
 }
+
 .navbar-brand img {
     width: 170px !important;
     height: 45px !important;
 }
-.link-nav
-{
-    margin-left:5px;
-    color:black !important;
+
+.link-nav {
+    margin-left: 5px;
+    color: black !important;
 }
 
 #loader {
@@ -120,36 +122,38 @@ footer {
     display: inline-block;
 }*/
 
-.main
-{
-    margin-top:50px;
+.main {
+    margin-top: 50px;
 }
+
 header {
-    position: relative ;
-  
+    position: relative;
     z-index: 100;
     width: 100%;
     background-color: teal;
 }
+
 .admin-container {
     margin-left: 100px;
     margin-right: 100px;
 }
-.nav-link
-{
-    color:white !important;
-    font-weight:bold !important;
-     
+
+.nav-link {
+    color: white !important;
+    font-weight: bold !important;
 }
+
 .input-group-addon {
     /*    background-image: url("path/to/font-awesome/icons/user.png");
    background-repeat: no-repeat;*/
     background-position: center;
     padding: 0 10px;
 }
+
 #map {
     height: 400px;
 }
+
 .rate-base-layer {
     color: #aaa;
 }
@@ -157,30 +161,32 @@ header {
 .rate-hover-layer {
     color: orange;
 }
-.rate,.rate1 {
+
+.rate, .rate1 {
     font-size: 35px;
 }
-/*.rate-select-layer span
+    /*.rate-select-layer span
 {
     color:white;
 }*/
 
-.rate .rate-select-layer {
-    color: orange;
-}
+    .rate .rate-select-layer {
+        color: orange;
+    }
+
     .rate1 .rate-select-layer {
         color: dimgray;
     }
-.unchecked
-{
-    color:dimgray !important
-}
-.recent-reviews
-{
 
-    height:230px;
-    overflow:scroll;
+.unchecked {
+    color: dimgray !important
 }
+
+.recent-reviews {
+    /*height:230px;*/
+    overflow: scroll;
+}
+
 .login-icon {
     padding: 10px;
     background: teal;
@@ -188,21 +194,70 @@ header {
     min-width: 40px;
     text-align: center;
 }
+
 .login-items {
     display: flex;
 }
 
 #myModalLogin .modal-content {
-    height: 300px;
+    height: 380px;
     width: 350px;
 }
+
 .login-img {
     width: 60px;
     margin-left: 35%;
     margin-top: 10%;
     margin-bottom: 20px;
 }
-.theme-color{
-    background-color:teal !important;
-    color:white !important;
+
+.theme-color {
+    background-color: teal !important;
+    color: white !important;
+}
+
+.reset-password {
+    margin-top: 100px;
+}
+
+.forgot-password {
+    margin-left: 50px;
+}
+
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+        .pagination li.active span {
+            color: white;
+            background-color: black;
+            border: 1px solid black;
+            padding: 5px 10px;
+        }
+
+        .pagination li:not(.active) a {
+            color: teal;
+            text-decoration: none;
+            border: 1px solid black;
+            padding: 5px 10px;
+        }
+
+            .pagination li:not(.active) a:hover {
+                background-color: black;
+                color: white;
+            }
+
+.brand-image {
+    background-color: white;
+}
+#map {
+    height: 400px;
 }

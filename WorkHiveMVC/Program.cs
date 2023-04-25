@@ -8,6 +8,8 @@ using System;
 using System.Configuration;
 using WorkHiveServices;
 using WorkHiveServices.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
@@ -18,13 +20,20 @@ Log.Logger = new LoggerConfiguration()
             .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddHttpClient();
 // Add services to the container.
+builder.Services.AddHttpClient();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+       .AddCookie(options =>
+       {
+           options.Cookie.Name = "WorkHive.CookieAuth";
+           options.LoginPath = "/Home/Index";
+           options.LogoutPath = "/Home/Index";
+       });
 
-
+builder.Services.AddAuthorization();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(1);
@@ -36,24 +45,20 @@ builder.Services.AddSession(options =>
 var builder1 = new ConfigurationBuilder()
     .SetBasePath(AppContext.BaseDirectory)
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
 ApiHelper.Configuration = builder1.Build();
 
 
 
 //Add services
-
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJobService, JobService>();
-//builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IFreelancerService, FreelancerService>();
-builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 
 
-
+builder.Services.AddHttpContextAccessor();
 
 
 var app = builder.Build();
@@ -69,6 +74,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
 // Use Identity
 app.UseAuthentication();
 app.UseAuthorization();

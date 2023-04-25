@@ -11,7 +11,6 @@ namespace WorkHiveMVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
         private readonly IHomeService _homeService;
 
         public HomeController(ILogger<HomeController> logger,IHomeService homeService)
@@ -20,29 +19,28 @@ namespace WorkHiveMVC.Controllers
             _logger = logger;
         }
 
+        //Main entry point of the application which is the landing page
         public async Task<ActionResult> Index()
         {
             try
             {
-                //throw new Exception();
                 var data = await _homeService.GetDashboardData();
-               
                 return View("LandingPage", data);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex,"Error occured");
-
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
 
-        public ActionResult Error()
+        //generic action methord.
+        //every catch block is redirected to this action methord
+        //error logging is implemented here using serilog
+        public ActionResult Error(Exception ex)
         {
+            _logger.LogError(ex, "Error occured");
             return View();
         }
-
-
-
     }
 }

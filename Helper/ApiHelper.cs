@@ -11,18 +11,23 @@ namespace Helper
 {
     public static class ApiHelper
     {
+        //this helper class has generic methords for calling Rest api endpoints. (GET,POST,PUT and DELETE)
         public static IConfiguration Configuration { get; set; }
-
+        public static HttpClient CreateClient()
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(Configuration["ApiBaseAddress"]);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            return client;
+        }
         public static async Task<T> GetAsync<T>(string endpoint)
         {
             try
             {
                 T data;
-                using (var client = new HttpClient())
+                using (var client = CreateClient())
                 {
-                    client.BaseAddress = new Uri(Configuration["ApiBaseAddress"]);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     HttpResponseMessage response = await client.GetAsync(endpoint);
                     if (response.IsSuccessStatusCode)
                     {
@@ -32,7 +37,6 @@ namespace Helper
                             data = JsonConvert.DeserializeObject<T>(d);
                             return (T)data;
                         }
-
                     }
                 }
             }
@@ -46,10 +50,8 @@ namespace Helper
         }
         public static async Task<bool> PostRequestAsync<T>(string endpoint, T value)
         {
-
-            using (var client = new System.Net.Http.HttpClient())
+            using (var client = CreateClient())
             {
-                client.BaseAddress = new Uri(Configuration["ApiBaseAddress"]);
                 var result = await client.PostAsJsonAsync("Freelancer", value);
                 if (result.IsSuccessStatusCode)
                     return true;
@@ -61,14 +63,12 @@ namespace Helper
         {
             try
             {
-                using (var client = new HttpClient())
+                using (var client = CreateClient())
                 {
                     T data;
-                    client.BaseAddress = new Uri(Configuration["ApiBaseAddress"]);
                     string jsonData = JsonConvert.SerializeObject(param);
                     StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
                     HttpResponseMessage response = await client.PostAsync(url, content);
-
                     if (response.IsSuccessStatusCode)
                     {
                         string d = await response.Content.ReadAsStringAsync();
@@ -89,15 +89,10 @@ namespace Helper
         }
         public static async Task<T> PutAsync<T>(string url, object param)
         {
-            using (var client = new HttpClient())
+            using (var client = CreateClient())
             {
                 T data;
-                client.BaseAddress = new Uri(Configuration["ApiBaseAddress"]);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                 HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
-
                 HttpResponseMessage response = await client.PutAsync(url, contentPost);
                 HttpContent content = response.Content;
 
@@ -112,44 +107,25 @@ namespace Helper
             return (T)o;
         }
 
-        //public async Task<T> DeleteAsync<T>(string url)
-        //{
-        //    T newT;
-        //    var httpClient = _httpClientFactory.CreateClient();
+        public static async Task<T> DeleteAsync<T>(string url)
+        {
+            T newT;
 
-        //    using (HttpResponseMessage response = await httpClient.DeleteAsync(url))
-        //    using (HttpContent content = response.Content)
-        //    {
-        //        string data = await content.ReadAsStringAsync();
-        //        if (data != null)
-        //        {
-        //            newT = JsonConvert.DeserializeObject<T>(data);
-        //            return newT;
-        //        }
-        //    }
-        //    Object o = new Object();
-        //    return (T)o;
-        //}
-
-        //public static async Task<T> PutAsync<T>(string endpoint)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri("http://localhost:64189/api/student");
-
-        //        //HTTP POST
-        //        var putTask = client.PutAsJsonAsync<T>(d);
-        //        putTask.Wait();
-
-        //        var result = putTask.Result;
-        //        if (result.IsSuccessStatusCode)
-        //        {
-
-        //            return RedirectToAction("Index");
-        //        }
-        //    }
-
-
-        //}
+            using (var client = CreateClient())
+            {
+                using (HttpResponseMessage response = await client.DeleteAsync(url))
+                using (HttpContent content = response.Content)
+                {
+                    string data = await content.ReadAsStringAsync();
+                    if (data != null)
+                    {
+                        newT = JsonConvert.DeserializeObject<T>(data);
+                        return newT;
+                    }
+                }
+            }
+            Object o = new Object();
+            return (T)o;
+        }
     }
 }

@@ -4,13 +4,13 @@
 
 @Html.HiddenFor(model => model.JobId)
 
-   <nav aria-label="breadcrumb" class="main-breadcrumb">
-            <ol class="breadcrumb">
-               <li class="breadcrumb-item">
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
             @Html.ActionLink("Back to Search", "JobSearch")
-                </li>
-            </ol>
-        </nav>
+        </li>
+    </ol>
+</nav>
 
 <div class="container">
     <div class="row">
@@ -26,14 +26,14 @@
                                 @Model.JobType
                             </span>
                         </div>
-                        
+
                     </div>
                     <div class="san mt-33">
                         <a href="#listing-location" class="listing-address">
                             <i class="fa fa-map-marker pr-2 ti-location-pin mrg-r-5"></i>
                             @Html.DisplayFor(model => model.Location)
                         </a>
-                       
+
                     </div>
                 </div>
             </div>

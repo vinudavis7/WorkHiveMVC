@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Models.Bid>
+﻿@model IEnumerable<Models.ViewModel.BidsViewModel>
 
 @{
     ViewData["Title"] = "ViewProposals";
@@ -14,20 +14,16 @@
         <thead class="thead-dark">
             <tr>
                 <th>
-                    @*                    @Html.DisplayNameFor(model => model.Job.Title)
-                    *@
+                    Freelancer
                 </th>
                 <th>
-                    Freelancer
+                    Job
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.BidAmount)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ExpectedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
@@ -40,23 +36,17 @@
             @foreach (var item in Model)
             {
                 <tr>
-
-                    <td>
-                        @*                        @Html.DisplayFor(modelItem => item.Job.Title)
-                    *@
-                    </td>
                     <th>
-                        @*                        @Html.ActionLink(item.Freelancer.UserDetails.Name, "Profile", "Freelancer",new { userId = item.Freelancer.UserDetails.UserId }, htmlAttributes:null )
-                    *@
+                        @Html.ActionLink(item.FreelancerName, "Profile", "Freelancer",new { userId = item.FreelancerId }, htmlAttributes:null )
                     </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobName)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.BidAmount)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ExpectedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Status)

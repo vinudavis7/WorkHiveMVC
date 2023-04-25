@@ -23,6 +23,7 @@ namespace WorkHiveMVC.Controllers
 
         public async Task<IActionResult> JobSearch(string? searchLocation, string? searchTitle, string? SearchCategory)
         {
+            //this action methord is used in landing page
             try
             {
                 List<Category> categoryList = await _categoryService.GetCategory();
@@ -42,12 +43,13 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
         [HttpPost]
         public async Task<IActionResult> Search([FromBody] JobSearchParams searchParams, int? page)
         {
+            //this action methord is used in job search page
             try
             {
                 if (searchParams == null)
@@ -62,7 +64,7 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
 
@@ -75,7 +77,7 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
 
@@ -88,7 +90,6 @@ namespace WorkHiveMVC.Controllers
         {
             try
             {
-
                 string userId = HttpContext.Session.GetString("loggedInUserId");
                 bid.UserId = userId;
                 var result = await _jobService.SaveBid(bid);
@@ -100,22 +101,6 @@ namespace WorkHiveMVC.Controllers
             }
         }
 
-        public async void ReadJobDescription()
-        {
-            string subscriptionKey = "ad9800191ebb43b88cbfcd018af7c751";
-            string region = "eastus"; // use your region instead
-            SpeechConfig speechConfig = SpeechConfig.FromSubscription(subscriptionKey, region);
-            speechConfig.SpeechSynthesisVoiceName = "en-US-JennyNeural";
-            string message = "Hello world";
-            using (SpeechSynthesizer synthesizer = new SpeechSynthesizer(speechConfig))
-            {
-                using (SpeechSynthesisResult result = await synthesizer.SpeakTextAsync(message))
-                {
-                    Console.WriteLine($"Speech resulted in status: {result.Reason}");
-                }
-            }
-        }
-
-
+ 
     }
 }

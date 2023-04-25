@@ -7,7 +7,6 @@
     var freelancers = Model.PopularFreelancers;
 }
 <link href="~/css/landingpage.css" rel="stylesheet" />
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/WorkHiveMVC.styles.css" asp-append-version="true" />
 <style>
     header {
@@ -73,12 +72,8 @@
                 <div class=" col-md-4">
                     <a href="#" onclick="searchJobByCategory('@item.CategoryName')">
                         <div class="popular-job-item">
-
-                           @* <span class="step-point">01</span>*@
-
                             <i class="fas fa-laptop-code"></i>
                             <h5>@item.CategoryName</h5>
-
                         </div>
                     </a>
                 </div>
@@ -127,8 +122,8 @@
                             <div class="job-listing">
                                 <div class="job-title-sec home">
                                     <div class="job-listing-footer">
-@*                                        <div class="c-logo"> <img src="images/company1.png" alt=""> </div>
-*@                                        <h3>
+                                        @*                                        <div class="c-logo"> <img src="images/company1.png" alt=""> </div>
+                                    *@                                        <h3>
                                             @Html.ActionLink(item.Title,"JobDetails","Jobs",new { jobId = item.JobId }, null)
                                         </h3>
                                         <ul>
@@ -142,8 +137,6 @@
                                     <div class="the-heart">
                                         <span class="fav-job"><i class="far fa-heart"></i></span>
                                         @Html.ActionLink("Apply Now","JobDetails","Jobs",new { jobId = item.JobId }, null)
-
-
                                     </div>
                                 </div>
                             </div>
@@ -176,16 +169,17 @@
                                     <div class="fr-grid-thumb">
                                         <a href="candidate-profile.html" tabindex="0">
                                             <div class="overall-rate"><i class="fas fa-check"></i></div>
-                                                @{if(!string.IsNullOrEmpty( item.ProfileImage))
+                                            @{
+                                                if (!string.IsNullOrEmpty(item.ProfileImage))
                                                 {
-                                                        <img src="data:image/png;base64,@item.ProfileImage" class="img-fluid mx-auto" alt="">
+                                                    <img src="data:image/png;base64,@item.ProfileImage" class="img-fluid mx-auto" alt="">
                                                 }
                                                 else
                                                 {
-                                                        <img src="images/noimage.jpg" class="img-fluid mx-auto" alt="">
+                                                    <img src="images/noimage.jpg" class="img-fluid mx-auto" alt="">
 
                                                 }
-                                                }
+                                            }
                                         </a>
                                     </div>
                                     <div class="fr-grid-deatil">
@@ -200,18 +194,20 @@
                                     <ul class="starts text-center">
                                         @{
 
-                                            int rating = item.Profile.Rating != null ? (int)item.Profile.Rating:0;
+                                            int rating = item.Profile.Rating != null ? (int)item.Profile.Rating : 0;
                                         }
-                                    
-                                        @for (int i = rating; i > 0; i--) {
-                                        <li>
-                                            <i class="fa fa-star checked"></i>
-                                        </li>
+
+                                        @for (int i = rating; i > 0; i--)
+                                        {
+                                            <li>
+                                                <i class="fa fa-star checked"></i>
+                                            </li>
                                         }
-                                        @for (int i = 5 - rating; i > 0; i--)  {
-                                        <li>
-                                            <i class="fa fa-star unchecked"></i>
-                                        </li>
+                                        @for (int i = 5 - rating; i > 0; i--)
+                                        {
+                                            <li>
+                                                <i class="fa fa-star unchecked"></i>
+                                            </li>
                                         }
                                     </ul>
                                 </div>
@@ -234,5 +230,5 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 </section>

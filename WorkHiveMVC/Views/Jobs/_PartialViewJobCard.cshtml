@@ -2,13 +2,16 @@
 @using X.PagedList;
 @using X.PagedList.Mvc.Core;
 
+
 <div class="pagination-container">
     @Html.PagedListPager(Model, page => Url.Action("Users", new { page }))
 </div>
-<div class="row job-list">
-@foreach (var item in Model)
-{
-    <div class="job-card col-md-3">
+<br />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="job-card col-md-3">
             <div class="col-md-12">
                 <h4 id="job-name" class="text-info font-weight-bold">
                     @Html.DisplayFor(modelItem => item.Title)
@@ -31,7 +34,8 @@
                 <br />
                 @Html.ActionLink("View Details","JobDetails",new { jobId = item.JobId }, null)
             </div>
-    </div>
+        </div>
 
     }
+
 </div>

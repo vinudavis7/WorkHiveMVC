@@ -73,7 +73,6 @@ namespace WorkHiveServices
             {
                 ProfileViewModel profile = new ProfileViewModel();
                 profile.UserId = user.Id;
-
                 profile.Name = user.UserName;
                 profile.Email = user.Email;
                 profile.Phone = user.PhoneNumber;
@@ -87,7 +86,6 @@ namespace WorkHiveServices
             {
                 throw ex;
             }
-
         }
         public async Task<bool> Register(RegisterRequest user)
         {
@@ -107,7 +105,6 @@ namespace WorkHiveServices
             try
             {
                 var res = await ApiHelper.PostAsync<LoginResponse>("api/Users/login",new  { Username = username ,Password= password });
-
                 return res;
             }
             catch (Exception ex)
@@ -116,5 +113,16 @@ namespace WorkHiveServices
             }
             
         }
+        public async Task<bool> ForgotPassword(string email)
+        {
+            var result = await ApiHelper.PostAsync<bool>("api/Users/ForgotPassword", email);
+            return result;
+        }
+        public async Task<bool> ResetPassword(ResetPasswordRequest reset)
+        {
+            var res = await ApiHelper.PostAsync<bool>("api/Users/ResetPassowrd", reset);
+            return res;
+        }
+
     }
 }

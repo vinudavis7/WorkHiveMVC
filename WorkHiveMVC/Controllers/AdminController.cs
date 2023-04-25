@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
@@ -10,17 +11,18 @@ using X.PagedList;
 
 namespace WorkHiveMVC.Controllers
 {
+    //only Admin will be able to access these action methords
+
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        // private readonly IAdminService _adminService;
+        //for pagination
+        int pageSize = 10;
+        int pageNumber = 1;
         private readonly IJobService _jobService;
         private readonly IUserService _userservice;
         private readonly IHomeService _homeService;
         private readonly ICategoryService _categoryService;
-
-        int pageSize = 10;
-        int pageNumber = 1;
-
         public AdminController(IJobService jobService, IUserService userService, IHomeService homeService, ICategoryService categoryService)
         {
             _jobService = jobService;
@@ -38,7 +40,7 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
         public async Task<ActionResult> Users(int? page)
@@ -51,7 +53,7 @@ namespace WorkHiveMVC.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
 
@@ -59,14 +61,14 @@ namespace WorkHiveMVC.Controllers
         {
             try
             {
-                JobSearchParams searchOptions = new JobSearchParams();
                 pageNumber = (page ?? 1);
-                var jobs = await _jobService.GetJobs(searchOptions);
-                return View(jobs.ToPagedList(pageNumber, pageSize));
+                JobSearchParams searchOptions = new JobSearchParams();
+                var joblist = await _jobService.GetJobs(searchOptions);
+                return View(joblist.ToPagedList(pageNumber, pageSize));
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
 
@@ -79,9 +81,9 @@ namespace WorkHiveMVC.Controllers
                 var categoryList = await _categoryService.GetCategory();
                 return View(categoryList.ToPagedList(pageNumber, pageSize));
             }
-            catch
+            catch(Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { ex = ex});
             }
 
         }

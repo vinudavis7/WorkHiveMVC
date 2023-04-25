@@ -16,8 +16,5 @@ namespace Models
         public DateTime DateCreated { get; set; }
         public string FreelancerId { get; set; }
         public string ClientId { get; set; }
-
-        //public virtual User Freelancer { get; set; }
-        //public virtual User Client { get; set; }
     }
 }

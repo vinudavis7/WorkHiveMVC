@@ -26,11 +26,9 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm  ">
-            @*  <div class="col-md-2">*@
             <a class="navbar-brand" href="/Home/Index">
-                <img src="~/images/logo1.png" alt="Logo" style="width:40px;">
+                <img src="~/images/workhivelogo.png" style="width:40px;" alt="Logo" class="brand-image img-rectangle elevation-3" style="opacity: .8">
             </a>
-            @*  </div>*@
             <div class="collapse navbar-collapse" id="mynavbar">
                 @if (loggedInUserType == "Freelancer")
                 {
@@ -59,36 +57,28 @@
                         </li>
                     </ul>
                 }
-
-
             </div>
             <form class="d-flex ">
                 @if (!string.IsNullOrEmpty(loggedInUserName))
                 {
                     <input type="hidden" value="@loggedInUserType" id="login-user-type" />
                     <input type="hidden" value="true" id="login-status" />
-
                     <p>Welcome @loggedInUserName </p>
-                    <a href="/User/Logout" class="link-nav btn btn-success">
+                    <a href="/User/Logout" class="link-nav btn btn-info ">
                         <i class="fas fa-user-circle"></i> Logout
                     </a>
                 }
                 else
                 {
-
                     <a href="#" class="link-nav btn btn-success theme-color" data-toggle="modal" data-target="#myModalLogin">
                         <i class="fas fa-user-circle"></i> Login
                     </a>
-
                     <a href="#" class="link-nav btn btn-success theme-color" data-toggle="modal" data-target="#myModalRegister">
                         <i class="fas fa-user-plus"></i>
                         Register
                     </a>
-
                 }
             </form>
-
-
         </nav>
     </header>
     <div class="container-landing">
@@ -99,7 +89,7 @@
     <div id="loader" style="display:none"></div>
     <footer class="border-top footer text-muted">
         <div class="container text-center">
-            &copy; 2023 - WorkHiveMVC 
+            &copy; 2023 - WorkHiveMVC
         </div>
     </footer>
 
