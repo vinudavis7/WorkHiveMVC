@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'WorkhiveApp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A850E57EE1204C48BA9CC70710D60A68 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1752E45D2A23453ABC767E0EAE1F339E }}
           package: .
