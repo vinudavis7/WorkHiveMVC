@@ -42,10 +42,10 @@ namespace WorkHiveServices
                 profile.Phone = user.PhoneNumber;
                 profile.Location = user.Location;
                 profile.ProfileImage = string.IsNullOrEmpty(user.ProfileImage)?string.Empty: user.ProfileImage;
-                profile.Skills = user.Profile.Skills;
+                profile.Skills = !string.IsNullOrEmpty(user.Profile.Skills)? user.Profile.Skills:"";
                 profile.Experience = user.Profile.Experience;
-                profile.Designation = user.Profile.Designation;
-                profile.Description = user.Profile.Description;
+                profile.Designation = !string.IsNullOrEmpty(user.Profile.Designation) ? user.Profile.Designation:"";
+                profile.Description = !string.IsNullOrEmpty(user.Profile.Description) ?user.Profile.Description:"";
                 profile.HourlyRate = user.Profile.HourlyRate;
                 profile.LocationCordinates = user.Profile.LocationCordinates;
                 profile.ReceiveJobNotifications=user.Profile.ReceiveJobNotifications;

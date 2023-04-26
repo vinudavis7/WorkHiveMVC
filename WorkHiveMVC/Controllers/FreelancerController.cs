@@ -89,6 +89,7 @@ namespace WorkHiveMVC.Controllers
         {
             try
             {
+                userId = HttpContext.Session.GetString("loggedInUserId");
                 var profile = await _freelancerService.GetFreelancerDetails(userId);
                 return View(profile);
             }
@@ -128,6 +129,7 @@ namespace WorkHiveMVC.Controllers
         {
             try
             {
+                userId = HttpContext.Session.GetString("loggedInUserId");
                 var details = await _freelancerService.GetBids(userId);
                 return View(details);
             }
