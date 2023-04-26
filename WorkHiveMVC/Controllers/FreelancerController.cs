@@ -11,7 +11,7 @@ using System.Data;
 namespace WorkHiveMVC.Controllers
 {
     //only Freelancers will be able to access these action methords
-    [Authorize(Roles = "Freelancer")]
+    
     public class FreelancerController : Controller
     {
         string userId = "";
@@ -44,8 +44,10 @@ namespace WorkHiveMVC.Controllers
                 return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
+        [Authorize]
         public async Task<bool> SaveReview([FromBody] ReviewRequest review)
         {
+            userId = HttpContext.Session.GetString("loggedInUserId");
             review.ClientId = userId;
             var result = await _reviewService.CreateReview(review);
             return result;
@@ -81,6 +83,7 @@ namespace WorkHiveMVC.Controllers
             }
             return list;
         }
+        [Authorize(Roles = "Freelancer")]
         [HttpGet]
         public async Task<ActionResult> EditProfile()
         {
@@ -94,7 +97,7 @@ namespace WorkHiveMVC.Controllers
                 return RedirectToAction("Error", "Home", new { ex = ex});
             }
         }
-
+        [Authorize(Roles = "Freelancer")]
         [HttpPost]
         public async Task<ActionResult> Edit(User user, IFormFile fileUpload)
         {
@@ -120,7 +123,7 @@ namespace WorkHiveMVC.Controllers
                 return RedirectToAction("EditProfile");
             }
         }
-
+        [Authorize(Roles = "Freelancer")]
         public async Task<ActionResult> ViewProposals()
         {
             try
