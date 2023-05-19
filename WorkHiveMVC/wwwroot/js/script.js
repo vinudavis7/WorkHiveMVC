@@ -27,7 +27,9 @@
                     }
                     else {
 
-
+dataLayer.push({
+                            'event': 'Login'
+                        })
                         alert("Login successfull")
 
                         $('#myModalLogin').hide();
@@ -119,7 +121,7 @@ function register() {
             success: function (data) {
                 if (data == true) {
                     dataLayer.push({
-                        'event':'New Registrations'
+                        'event':'NewRegistrations'
                     })
                     alert("Registration successfull")
                     window.location.reload();
