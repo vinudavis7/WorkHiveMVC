@@ -23,6 +23,9 @@
             contentType: 'application/json',
             success: function (data) {
                 if (data == true) {
+                    dataLayer.push({
+                        'event': 'Bids'
+                    })
                     alert("Bid submitted successfully")
                     $('#myModalproposal').hide();
                     $('.modal-backdrop').remove()
