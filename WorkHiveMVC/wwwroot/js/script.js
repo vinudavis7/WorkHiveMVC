@@ -118,6 +118,9 @@ function register() {
             contentType: 'application/json',
             success: function (data) {
                 if (data == true) {
+                    dataLayer.push({
+                        'event':'New Registrations'
+                    })
                     alert("Registration successfull")
                     window.location.reload();
                     // $('#myModalRegister').hide();
